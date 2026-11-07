@@ -3,793 +3,690 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard SERUTI TW IV 2026 - BPS Kabupaten Tegal</title>
-  
-  <!-- Google Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Portal SERUTI TW IV 2026 - BPS Kabupaten Tegal</title>
+  <!-- Bootstrap 5 CSS & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
     :root {
-      --bps-blue: #0b3954;
-      --bps-primary: #1565c0;
-      --bps-accent: #00a896;
-      --bps-bg: #f3f6f9;
-      --card-shadow: 0 8px 24px rgba(149, 157, 165, 0.12);
+      --primary-bps: #0d47a1;
+      --secondary-bps: #00796b;
+      --light-bg: #f4f6fa;
     }
-
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bps-bg);
-      color: #334155;
-      min-height: 100vh;
+      background-color: var(--light-bg);
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
-
-    /* Navbar Header */
-    .navbar-header {
-      background: linear-gradient(135deg, #0b3954 0%, #1565c0 100%);
-      padding: 16px 0;
-      box-shadow: 0 4px 20px rgba(11, 57, 84, 0.2);
+    .navbar-custom {
+      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
-    .brand-title {
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      font-size: 1.35rem;
-    }
-
-    /* Modern Tabs */
-    .custom-nav-tabs {
-      border-bottom: 2px solid #e2e8f0;
-      gap: 8px;
-    }
-    .custom-nav-tabs .nav-link {
-      border: none;
-      color: #64748b;
+    .nav-tabs .nav-link {
+      color: #495057;
       font-weight: 600;
+      border: none;
       padding: 12px 20px;
-      border-radius: 10px;
-      transition: all 0.25s ease;
-      font-size: 0.95rem;
     }
-    .custom-nav-tabs .nav-link:hover {
-      color: var(--bps-primary);
-      background-color: #e2e8f0;
+    .nav-tabs .nav-link.active {
+      color: var(--primary-bps);
+      border-bottom: 3px solid var(--primary-bps);
+      background: transparent;
     }
-    .custom-nav-tabs .nav-link.active {
+    .card-dashboard {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      background: #ffffff;
+      margin-bottom: 20px;
+    }
+    .kpi-card {
+      border-radius: 12px;
+      padding: 20px;
       color: #fff;
-      background: var(--bps-primary);
-      box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
-    }
-
-    /* Metric Cards */
-    .stat-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: var(--card-shadow);
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-    .stat-card:hover {
-      transform: translateY(-4px);
-    }
-    .stat-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-    }
-
-    /* Content Cards */
-    .content-box {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: var(--card-shadow);
-      border: 1px solid #e2e8f0;
-      margin-bottom: 25px;
-      overflow: hidden;
-    }
-    .content-box-header {
-      padding: 18px 24px;
-      border-bottom: 1px solid #f1f5f9;
-      background: #fafcff;
-      display: flex;
       justify-content: space-between;
-      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-
-    /* Table Design */
-    .table-modern thead th {
-      background-color: #f8fafc;
-      color: #475569;
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: 700;
-      padding: 14px 16px;
-      border-bottom: 2px solid #e2e8f0;
-    }
-    .table-modern tbody td {
-      padding: 14px 16px;
-      vertical-align: middle;
-      font-size: 0.9rem;
-      border-bottom: 1px solid #f1f5f9;
-    }
-
-    /* Ruta Badge Matrix */
-    .ruta-badge {
-      display: inline-block;
-      width: 22px;
-      height: 22px;
-      line-height: 22px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-align: center;
-      border-radius: 6px;
-      margin: 1px;
-    }
-    .ruta-badge.done {
-      background-color: #dcfce7;
-      color: #166534;
-      border: 1px solid #86efac;
-    }
-    .ruta-badge.pending {
-      background-color: #f1f5f9;
-      color: #94a3b8;
-      border: 1px dashed #cbd5e1;
-    }
-
-    /* Photo Cards */
-    .photo-card {
-      border-radius: 14px;
-      overflow: hidden;
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      box-shadow: var(--card-shadow);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    .photo-thumb-container {
-      height: 200px;
-      background: #f8fafc;
-      position: relative;
-      overflow: hidden;
-    }
-    .photo-thumb {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-    .photo-thumb:hover {
-      transform: scale(1.05);
-    }
+    .bg-blue { background: linear-gradient(135deg, #1e88e5, #1565c0); }
+    .bg-green { background: linear-gradient(135deg, #43a047, #2e7d32); }
+    .bg-amber { background: linear-gradient(135deg, #fb8c00, #ef6c00); }
     .preview-box {
-      max-height: 200px;
+      max-height: 180px;
       object-fit: cover;
       display: none;
       border-radius: 8px;
       margin-top: 10px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid #ddd;
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navbar Header -->
-  <header class="navbar-header text-white mb-4">
-    <div class="container-xl d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center gap-3">
-        <div class="bg-white text-primary p-2 rounded-3 shadow-sm d-flex align-items-center justify-content-center" style="width:44px; height:44px;">
-          <i class="bi bi-pie-chart-fill fs-4"></i>
-        </div>
-        <div>
-          <h1 class="brand-title mb-0">SERUTI TW IV 2026</h1>
-          <span class="small opacity-75">BPS KABUPATEN TEGAL &bull; Survei Ekonomi Rumah Tangga Triwulanan</span>
-        </div>
-      </div>
-      <div>
-        <button class="btn btn-outline-light btn-sm rounded-pill px-3" onclick="loadAllData()">
-          <i class="bi bi-arrow-clockwise me-1"></i> Perbarui Data
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main class="container-xl">
-    
-    <!-- Navigation Tabs -->
-    <ul class="nav custom-nav-tabs mb-4 flex-nowrap overflow-auto" id="mainTab" role="tablist">
-      <li class="nav-item">
-        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabDashboard">
-          <i class="bi bi-speedometer2 me-1"></i> Dashboard & Progres
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabAlokasi">
-          <i class="bi bi-people-fill me-1"></i> Alokasi Sampel
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabDokumentasi">
-          <i class="bi bi-file-earmark-pdf-fill me-1"></i> Input Dokumentasi & Cetak PDF
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabGaleri">
-          <i class="bi bi-images me-1"></i> Galeri Lapangan
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabTautan">
-          <i class="bi bi-link-45deg me-1"></i> Tautan Penting
-        </button>
-      </li>
-    </ul>
-
-    <div class="tab-content" id="mainTabContent">
-      
-      <!-- ================= TAB 1: DASHBOARD ================= -->
-      <div class="tab-pane fade show active" id="tabDashboard">
-        
-        <!-- Scorecards -->
-        <div class="row g-3 mb-4">
-          <div class="col-6 col-lg-3">
-            <div class="stat-card">
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <div class="text-muted small fw-semibold">TOTAL SAMPEL</div>
-                  <h3 class="fw-bold mb-0 mt-1 text-primary" id="kpiSampel">--</h3>
-                  <small class="text-muted">Blok Sensus / SLS</small>
-                </div>
-                <div class="stat-icon bg-primary-subtle text-primary">
-                  <i class="bi bi-geo-alt-fill"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-lg-3">
-            <div class="stat-card">
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <div class="text-muted small fw-semibold">TOTAL PETUGAS</div>
-                  <h3 class="fw-bold mb-0 mt-1 text-success" id="kpiPetugas">--</h3>
-                  <small class="text-muted">PCL &amp; PML</small>
-                </div>
-                <div class="stat-icon bg-success-subtle text-success">
-                  <i class="bi bi-person-check-fill"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-lg-3">
-            <div class="stat-card">
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <div class="text-muted small fw-semibold">RUTA TERCACAH</div>
-                  <h3 class="fw-bold mb-0 mt-1 text-info" id="kpiRuta">--</h3>
-                  <small class="text-muted" id="kpiRutaPersen">0% Target</small>
-                </div>
-                <div class="stat-icon bg-info-subtle text-info">
-                  <i class="bi bi-house-check-fill"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-lg-3">
-            <div class="stat-card">
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <div class="text-muted small fw-semibold">LAPORAN MASUK</div>
-                  <h3 class="fw-bold mb-0 mt-1 text-warning" id="kpiLaporan">--</h3>
-                  <small class="text-muted">Dokumentasi Lapangan</small>
-                </div>
-                <div class="stat-icon bg-warning-subtle text-warning">
-                  <i class="bi bi-camera-fill"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Monitoring Progres RUTA -->
-        <div class="content-box">
-          <div class="content-box-header">
-            <h6 class="fw-bold mb-0"><i class="bi bi-graph-up-arrow me-2 text-primary"></i> Progres Pendataan RUTA Lapangan (1–10)</h6>
-            <span class="badge bg-primary-subtle text-primary rounded-pill px-3" id="badgeCountPendataan">22 SLS</span>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-modern table-hover mb-0" id="tableProgresGrid">
-              <thead>
-                <tr>
-                  <th>NKS</th>
-                  <th>Kecamatan</th>
-                  <th>Desa</th>
-                  <th>PCL / PML</th>
-                  <th>Target RUTA (1 - 10)</th>
-                  <th class="text-center">Capaian</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td colspan="6" class="text-center py-4 text-muted">Sedang memuat data progres...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= TAB 2: ALOKASI ================= -->
-      <div class="tab-pane fade" id="tabAlokasi">
-        <div class="content-box">
-          <div class="content-box-header flex-wrap gap-2">
-            <h6 class="fw-bold mb-0"><i class="bi bi-person-lines-fill me-2 text-primary"></i> Alokasi Sampel dan Petugas Lapangan</h6>
-            <div class="col-12 col-md-4">
-              <input type="text" id="inputSearchAlokasi" class="form-control form-control-sm rounded-pill" placeholder="Cari Desa, Petugas, atau NKS..." onkeyup="filterAlokasi()">
-            </div>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-modern table-hover mb-0" id="tableAlokasi">
-              <thead>
-                <tr>
-                  <th>NKS</th>
-                  <th>Kecamatan</th>
-                  <th>Desa</th>
-                  <th>SLS</th>
-                  <th>PCL</th>
-                  <th>PML</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td colspan="6" class="text-center py-4 text-muted">Memuat data...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= TAB 3: FORM DOKUMENTASI ================= -->
-      <div class="tab-pane fade" id="tabDokumentasi">
-        <div class="row justify-content-center">
-          <div class="col-lg-9">
-            <div class="content-box">
-              <div class="content-box-header bg-primary text-white">
-                <div>
-                  <h6 class="fw-bold mb-1 text-white"><i class="bi bi-pencil-square me-2"></i> Form Dokumentasi &amp; Cetak Otomatis PDF</h6>
-                  <p class="small mb-0 opacity-75">Tersimpan ke sheet Dokumentasi &amp; template Laporan Pengawasan</p>
-                </div>
-              </div>
-              <div class="p-4">
-                <form id="formDokumentasi" onsubmit="submitFormDokumentasi(event)">
-                  <div class="row g-3">
-                    <div class="col-md-8">
-                      <label class="form-label fw-semibold">Nama Petugas <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="inputNama" placeholder="Nama Lengkap Anda" required>
-                    </div>
-                    <div class="col-md-4">
-                      <label class="form-label fw-semibold">Status <span class="text-danger">*</span></label>
-                      <select class="form-select" id="inputStatus" required>
-                        <option value="PCL">PCL</option>
-                        <option value="PML" selected>PML</option>
-                      </select>
-                    </div>
-
-                    <div class="col-md-6">
-                      <label class="form-label fw-semibold">Tanggal Lapangan <span class="text-danger">*</span></label>
-                      <input type="date" class="form-control" id="inputTanggal" required>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-label fw-semibold">Nama PCL yang Didampingi <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="inputNamaPcl" placeholder="Nama Petugas PCL" required>
-                    </div>
-
-                    <div class="col-md-6">
-                      <label class="form-label fw-semibold">Kecamatan <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="inputKecamatan" placeholder="Contoh: Balapulang" required>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-label fw-semibold">Desa / Kelurahan <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="inputDesa" placeholder="Contoh: Harjowinangun" required>
-                    </div>
-
-                    <div class="col-12">
-                      <label class="form-label fw-semibold">Perangkat Desa yang Ditemui &amp; Jabatannya <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="inputPerangkat" placeholder="Contoh: SLAMET, SEKDES DESA PAMIRITAN" required>
-                    </div>
-
-                    <div class="col-12">
-                      <label class="form-label fw-semibold">Ringkasan Hasil Lapangan <span class="text-danger">*</span></label>
-                      <textarea class="form-control" id="inputRingkasan" rows="3" placeholder="Uraikan kondisi pengawasan, koordinasi desa, atau proses wawancara..." required></textarea>
-                    </div>
-
-                    <div class="col-12">
-                      <label class="form-label fw-semibold">Fenomena Lapangan <span class="text-danger">*</span></label>
-                      <textarea class="form-control" id="inputFenomena" rows="3" placeholder="Kendala responden, anomali pengeluaran, komoditas khas, dll..." required></textarea>
-                    </div>
-
-                    <div class="col-md-6">
-                      <label class="form-label fw-semibold">Foto Dokumentasi 1</label>
-                      <input type="file" class="form-control" id="fileFoto1" accept="image/*" onchange="handleImage(this, 'foto1')">
-                      <img id="prevFoto1" class="preview-box w-100" alt="Preview 1">
-                    </div>
-
-                    <div class="col-md-6">
-                      <label class="form-label fw-semibold">Foto Dokumentasi 2</label>
-                      <input type="file" class="form-control" id="fileFoto2" accept="image/*" onchange="handleImage(this, 'foto2')">
-                      <img id="prevFoto2" class="preview-box w-100" alt="Preview 2">
-                    </div>
-
-                    <div class="col-12 text-center mt-4">
-                      <button type="submit" id="btnSubmitForm" class="btn btn-primary btn-lg rounded-pill px-5 shadow">
-                        <i class="bi bi-cloud-arrow-up-fill me-2"></i> Simpan &amp; Unduh PDF
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= TAB 4: GALERI DOKUMENTASI ================= -->
-      <div class="tab-pane fade" id="tabGaleri">
-        <div class="row g-4" id="galleryContainer">
-          <div class="col-12 text-center py-5 text-muted">Memuat galeri dokumentasi...</div>
-        </div>
-      </div>
-
-      <!-- ================= TAB 5: TAUTAN ================= -->
-      <div class="tab-pane fade" id="tabTautan">
-        <div class="row g-4">
-          <div class="col-md-6">
-            <div class="content-box p-4 h-100 d-flex flex-column justify-content-between">
-              <div>
-                <div class="d-flex align-items-center gap-3 mb-3">
-                  <div class="stat-icon bg-primary-subtle text-primary"><i class="bi bi-cloud-arrow-up-fill"></i></div>
-                  <div>
-                    <h5 class="fw-bold mb-0">Upload Lembar Kerja (LK)</h5>
-                    <small class="text-muted">Folder Unggahan LK Pencacahan</small>
-                  </div>
-                </div>
-                <p class="text-muted small">Akses cepat menuju Google Drive tempat pengumpulan Lembar Kerja yang telah terisi.</p>
-              </div>
-              <a href="#" id="btnLinkLK" target="_blank" class="btn btn-outline-primary rounded-pill w-100 mt-3">
-                Buka Link Unggah LK <i class="bi bi-box-arrow-up-right ms-1"></i>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="content-box p-4 h-100 d-flex flex-column justify-content-between">
-              <div>
-                <div class="d-flex align-items-center gap-3 mb-3">
-                  <div class="stat-icon bg-warning-subtle text-warning"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                  <div>
-                    <h5 class="fw-bold mb-0">Tabel Konfirmasi Anomali</h5>
-                    <small class="text-muted">Spreadsheet Anomali Lapangan</small>
-                  </div>
-                </div>
-                <p class="text-muted small">Cek dan selesaikan data anomali atau *outlier* hasil pencacahan SERUTI TW IV.</p>
-              </div>
-              <a href="https://docs.google.com/spreadsheets/d/1BndYmdADnqKAGxUpE590rcS3M69ozpVkueziNGjzfko/edit?usp=sharing" target="_blank" class="btn btn-outline-warning rounded-pill w-100 mt-3 text-dark fw-bold">
-                Buka Spreadsheet Anomali <i class="bi bi-box-arrow-up-right ms-1"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Modal Lightbox Foto -->
-  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content border-0 bg-transparent">
-        <div class="modal-body p-0 text-center">
-          <img id="modalImgTag" src="" class="img-fluid rounded-4 shadow-lg" alt="Foto">
-        </div>
-      </div>
-    </div>
+<!-- Header Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+      <i class="bi bi-bar-chart-line-fill me-2 fs-4"></i> SERUTI TW IV 2026
+    </a>
+    <span class="navbar-text text-white-50 d-none d-md-inline">
+      BPS Kabupaten Tegal
+    </span>
   </div>
+</nav>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Tab Navigation Menu -->
+<div class="container-fluid px-4 mt-3">
+  <ul class="nav nav-tabs" id="mainTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="tab-dashboard" data-bs-toggle="tab" data-bs-target="#content-dashboard" type="button" role="tab">
+        <i class="bi bi-speedometer2 me-1"></i> Dashboard & Progres
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab-alokasi" data-bs-toggle="tab" data-bs-target="#content-alokasi" type="button" role="tab">
+        <i class="bi bi-people-fill me-1"></i> Alokasi Sampel & Petugas
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab-input-pendataan" data-bs-toggle="tab" data-bs-target="#content-input-pendataan" type="button" role="tab">
+        <i class="bi bi-pencil-square me-1"></i> Input Progres Pendataan
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab-input-kab" data-bs-toggle="tab" data-bs-target="#content-input-kab" type="button" role="tab">
+        <i class="bi bi-building me-1"></i> Input Penerimaan Kab
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab-input-ipds" data-bs-toggle="tab" data-bs-target="#content-input-ipds" type="button" role="tab">
+        <i class="bi bi-database-check me-1"></i> Input Penerimaan IPDS
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab-form" data-bs-toggle="tab" data-bs-target="#content-form" type="button" role="tab">
+        <i class="bi bi-file-earmark-plus-fill me-1"></i> Input Dokumentasi (PDF)
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab-riwayat" data-bs-toggle="tab" data-bs-target="#content-riwayat" type="button" role="tab">
+        <i class="bi bi-images me-1"></i> Galeri Lapangan
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab-links" data-bs-toggle="tab" data-bs-target="#content-links" type="button" role="tab">
+        <i class="bi bi-link-45deg me-1"></i> Tautan Penting
+      </button>
+    </li>
+  </ul>
+</div>
 
-  <script>
-    // ========================================================
-    // GANTI DENGAN URL WEB APP HASIL DEPLOY APPS SCRIPT ANDA
-    // ========================================================
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec";
+<!-- Tab Content Pages -->
+<div class="container-fluid px-4 py-4">
+  <div class="tab-content" id="mainTabContent">
+    
+    <!-- 1. DASHBOARD & PROGRES -->
+    <div class="tab-pane fade show active" id="content-dashboard" role="tabpanel">
+      <!-- KPI Ringkasan -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="kpi-card bg-blue">
+            <div>
+              <div class="text-uppercase small fw-semibold">Total Sampel BS / SLS</div>
+              <h2 class="fw-bold mb-0" id="kpiTotalSampel">...</h2>
+            </div>
+            <i class="bi bi-geo-alt fs-1 opacity-75"></i>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="kpi-card bg-green">
+            <div>
+              <div class="text-uppercase small fw-semibold">Jumlah Petugas (PCL/PML)</div>
+              <h2 class="fw-bold mb-0" id="kpiTotalPetugas">...</h2>
+            </div>
+            <i class="bi bi-person-check fs-1 opacity-75"></i>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="kpi-card bg-amber">
+            <div>
+              <div class="text-uppercase small fw-semibold">Dokumentasi Terkirim</div>
+              <h2 class="fw-bold mb-0" id="kpiTotalDok">...</h2>
+            </div>
+            <i class="bi bi-file-earmark-pdf fs-1 opacity-75"></i>
+          </div>
+        </div>
+      </div>
 
-    let stateAlokasi = [];
-    let foto1Base64 = "", foto1FileName = "";
-    let foto2Base64 = "", foto2FileName = "";
-
-    document.getElementById('inputTanggal').valueAsDate = new Date();
-
-    window.addEventListener('DOMContentLoaded', loadAllData);
-
-    // Ambil Data dari Backend Apps Script
-    function loadAllData() {
-      fetch(WEB_APP_URL + "?action=getDashboard")
-        .then(res => res.json())
-        .then(res => {
-          if (res.success && res.data) {
-            populateDashboard(res.data);
-          }
-        })
-        .catch(err => {
-          console.warn("Gagal memuat otomatis, mencoba via POST fallback:", err);
-          fetch(WEB_APP_URL, {
-            method: "POST",
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: "getDashboard" })
-          })
-          .then(r => r.json())
-          .then(r => { if(r.success) populateDashboard(r.data); });
-        });
-    }
-
-    // Render Data ke Tampilan
-    function populateDashboard(data) {
-      // 1. KPI Cards
-      stateAlokasi = data.alokasi || [];
-      document.getElementById('kpiSampel').innerText = stateAlokasi.length || 0;
-      
-      const petugasSet = new Set();
-      stateAlokasi.forEach(item => {
-        if (item.pcl) petugasSet.add(item.pcl.trim());
-        if (item.pml) petugasSet.add(item.pml.trim());
-      });
-      document.getElementById('kpiPetugas').innerText = petugasSet.size || 0;
-      document.getElementById('kpiLaporan').innerText = (data.dokumentasi || []).length;
-
-      // 2. Render Tabel Alokasi
-      renderAlokasi(stateAlokasi);
-
-      // 3. Render Progress Grid RUTA 1-10
-      renderProgresGrid(data.progresPendataan || []);
-
-      // 4. Render Galeri Foto
-      renderGaleri(data.dokumentasi || []);
-
-      // 5. Setup Link
-      if (data.links && data.links.length > 0) {
-        if (data.links[0].anomali) {
-          document.getElementById('btnLinkLK').href = data.links[0].anomali;
-        }
-      }
-    }
-
-    // Render Grid RUTA 1 - 10
-    function renderProgresGrid(rawRows) {
-      const tbody = document.querySelector('#tableProgresGrid tbody');
-      if (!rawRows || rawRows.length < 3) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada data progres pendataan.</td></tr>';
-        return;
-      }
-
-      let totalRutaDone = 0;
-      let totalTargetRuta = 0;
-      let html = '';
-
-      // Baris 0: Header "RUTA", Baris 1: Kolom [NKS, KEC, DESA, SLS, PCL, PML, 1, 2, ... 10]
-      const dataRows = rawRows.slice(2);
-      document.getElementById('badgeCountPendataan').innerText = dataRows.length + ' SLS Sampel';
-
-      dataRows.forEach(row => {
-        const nks = row[0];
-        const kec = row[1];
-        const desa = row[2];
-        const pcl = row[4];
-        const pml = row[5];
-
-        let countDone = 0;
-        let rutaBadges = '';
-
-        for (let r = 1; r <= 10; r++) {
-          const val = (row[5 + r] || "").toString().trim();
-          const isDone = (val !== "" && val !== "0" && val !== "-");
-          if (isDone) countDone++;
-          rutaBadges += `<span class="ruta-badge ${isDone ? 'done' : 'pending'}" title="RUTA ${r}: ${isDone ? 'Selesai' : 'Belum'}">${r}</span>`;
-        }
-
-        totalRutaDone += countDone;
-        totalTargetRuta += 10;
-        const percent = Math.round((countDone / 10) * 100);
-
-        html += `
-          <tr>
-            <td class="fw-bold text-primary">${nks}</td>
-            <td>${kec}</td>
-            <td class="fw-semibold">${desa}</td>
-            <td>
-              <div class="small fw-semibold">${pcl}</div>
-              <div class="text-muted" style="font-size: 0.75rem;">PML: ${pml}</div>
-            </td>
-            <td>${rutaBadges}</td>
-            <td class="text-center">
-              <span class="badge ${percent === 100 ? 'bg-success' : percent > 0 ? 'bg-primary' : 'bg-light text-muted'} rounded-pill">
-                ${countDone}/10 (${percent}%)
-              </span>
-            </td>
-          </tr>
-        `;
-      });
-
-      tbody.innerHTML = html;
-      document.getElementById('kpiRuta').innerText = totalRutaDone;
-      const totalPercent = totalTargetRuta > 0 ? Math.round((totalRutaDone / totalTargetRuta) * 100) : 0;
-      document.getElementById('kpiRutaPersen').innerText = `${totalPercent}% dari ${totalTargetRuta} Target`;
-    }
-
-    // Render Tabel Alokasi
-    function renderAlokasi(list) {
-      const tbody = document.querySelector('#tableAlokasi tbody');
-      if (!list || !list.length) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">Tidak ada data alokasi.</td></tr>';
-        return;
-      }
-      tbody.innerHTML = list.map(a => `
-        <tr>
-          <td class="fw-bold text-primary">${a.nks}</td>
-          <td>${a.kec}</td>
-          <td class="fw-semibold">${a.desa}</td>
-          <td class="small text-muted">${a.sls || '-'}</td>
-          <td class="fw-semibold">${a.pcl}</td>
-          <td class="text-muted">${a.pml}</td>
-        </tr>
-      `).join('');
-    }
-
-    function filterAlokasi() {
-      const q = document.getElementById('inputSearchAlokasi').value.toLowerCase();
-      const filtered = stateAlokasi.filter(a => 
-        (a.nks && a.nks.toLowerCase().includes(q)) ||
-        (a.desa && a.desa.toLowerCase().includes(q)) ||
-        (a.kec && a.kec.toLowerCase().includes(q)) ||
-        (a.pcl && a.pcl.toLowerCase().includes(q)) ||
-        (a.pml && a.pml.toLowerCase().includes(q))
-      );
-      renderAlokasi(filtered);
-    }
-
-    // Convert Link Google Drive ke URL Thumbnail yang bisa dirender <img>
-    function getDriveThumb(url) {
-      if (!url) return '';
-      const match = url.match(/[-\w]{25,}/);
-      return match ? `https://lh3.googleusercontent.com/d/${match[0]}` : url;
-    }
-
-    // Render Galeri
-    function renderGaleri(items) {
-      const container = document.getElementById('galleryContainer');
-      if (!items || !items.length) {
-        container.innerHTML = '<div class="col-12 text-center py-5 text-muted">Belum ada dokumentasi lapangan yang diunggah.</div>';
-        return;
-      }
-
-      container.innerHTML = items.map(d => {
-        const thumb1 = getDriveThumb(d.foto1);
-        const thumb2 = getDriveThumb(d.foto2);
-
-        return `
-          <div class="col-md-6 col-lg-4">
-            <div class="photo-card">
-              <div class="photo-thumb-container d-flex">
-                ${thumb1 ? `<img src="${thumb1}" class="photo-thumb ${thumb2 ? 'w-50' : 'w-100'}" onclick="showPhotoModal('${thumb1}')" style="cursor:pointer;" alt="Foto 1">` : ''}
-                ${thumb2 ? `<img src="${thumb2}" class="photo-thumb w-50" onclick="showPhotoModal('${thumb2}')" style="cursor:pointer;" alt="Foto 2">` : ''}
-                ${!thumb1 && !thumb2 ? '<div class="d-flex align-items-center justify-content-center w-100 text-muted"><i class="bi bi-image fs-1 opacity-25"></i></div>' : ''}
-              </div>
-              <div class="p-3 d-flex flex-column justify-content-between flex-grow-1">
-                <div>
-                  <div class="d-flex justify-content-between align-items-center mb-1">
-                    <span class="badge bg-primary-subtle text-primary fw-semibold">${d.status || 'PCL'}</span>
-                    <small class="text-muted"><i class="bi bi-calendar3 me-1"></i>${d.tanggal}</small>
-                  </div>
-                  <h6 class="fw-bold mb-1">${d.nama}</h6>
-                  <p class="small text-secondary mb-2"><i class="bi bi-geo-alt me-1"></i>${d.desa}, Kec. ${d.kecamatan}</p>
-                  <p class="small text-muted mb-2 text-truncate" style="max-width: 100%;" title="${d.ringkasan}">${d.ringkasan}</p>
-                </div>
-                <div class="pt-2 border-top small text-muted">
-                  <strong>Bertemu:</strong> ${d.perangkat || '-'}
-                </div>
-              </div>
+      <!-- Tabel Ringkasan Progres -->
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card card-dashboard">
+            <div class="card-header bg-white py-3 fw-bold">
+              <i class="bi bi-graph-up-arrow me-2 text-primary"></i> Progres Pendataan Lapangan
+            </div>
+            <div class="card-body p-0 table-responsive" style="max-height: 400px;">
+              <table class="table table-hover table-striped mb-0 text-center" id="tableProgresPendataan">
+                <thead class="table-light"><tr><th>Memuat data...</th></tr></thead>
+                <tbody></tbody>
+              </table>
             </div>
           </div>
-        `;
-      }).join('');
-    }
+        </div>
 
-    function showPhotoModal(url) {
-      document.getElementById('modalImgTag').src = url;
-      new bootstrap.Modal(document.getElementById('imageModal')).show();
-    }
+        <div class="col-lg-6">
+          <div class="card card-dashboard">
+            <div class="card-header bg-white py-3 fw-bold">
+              <i class="bi bi-check2-circle me-2 text-success"></i> Progres Penerimaan Kabupaten
+            </div>
+            <div class="card-body p-0 table-responsive" style="max-height: 400px;">
+              <table class="table table-hover table-striped mb-0 text-center" id="tableProgresKab">
+                <thead class="table-light"><tr><th>Memuat data...</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-1">
+        <div class="col-12">
+          <div class="card card-dashboard">
+            <div class="card-header bg-white py-3 fw-bold">
+              <i class="bi bi-database-check me-2 text-info"></i> Progres Penerimaan IPDS
+            </div>
+            <div class="card-body p-0 table-responsive" style="max-height: 400px;">
+              <table class="table table-hover table-striped mb-0 text-center" id="tableProgresIPDS">
+                <thead class="table-light"><tr><th>Memuat data...</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    // Preview File Gambar Base64
-    function handleImage(el, target) {
-      const file = el.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        if (target === 'foto1') {
-          foto1Base64 = e.target.result;
-          foto1FileName = file.name;
-          const p = document.getElementById('prevFoto1');
-          p.src = e.target.result;
-          p.style.display = 'block';
-        } else {
-          foto2Base64 = e.target.result;
-          foto2FileName = file.name;
-          const p = document.getElementById('prevFoto2');
-          p.src = e.target.result;
-          p.style.display = 'block';
+    <!-- MENU INPUT PROGRES -->
+    <div class="tab-pane fade" id="content-input-pendataan" role="tabpanel">
+      <div class="row justify-content-center"><div class="col-lg-10">
+        <div class="card card-dashboard">
+          <div class="card-header bg-primary text-white fw-bold">Input Progres Pendataan</div>
+          <div class="card-body">
+            <p class="text-muted small">Kolom input mengikuti header pada sheet "Progres pendataan".</p>
+            <form id="formProgressPendataan" onsubmit="submitProgress(event, 'Progres pendataan', 'formProgressPendataan')">
+              <div class="row g-3" id="fieldsProgressPendataan"><div class="col-12 text-muted">Memuat struktur kolom...</div></div>
+              <div class="mt-4"><button class="btn btn-primary" type="submit"><i class="bi bi-save me-1"></i> Simpan Progres Pendataan</button></div>
+              <div class="small mt-2" id="statusProgressPendataan"></div>
+            </form>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="tab-pane fade" id="content-input-kab" role="tabpanel">
+      <div class="row justify-content-center"><div class="col-lg-10">
+        <div class="card card-dashboard">
+          <div class="card-header bg-success text-white fw-bold">Input Penerimaan Kabupaten</div>
+          <div class="card-body">
+            <p class="text-muted small">Kolom input mengikuti header pada sheet "Progres penerimaan kab".</p>
+            <form id="formProgressKab" onsubmit="submitProgress(event, 'Progres penerimaan kab', 'formProgressKab')">
+              <div class="row g-3" id="fieldsProgressKab"><div class="col-12 text-muted">Memuat struktur kolom...</div></div>
+              <div class="mt-4"><button class="btn btn-success" type="submit"><i class="bi bi-save me-1"></i> Simpan Penerimaan Kabupaten</button></div>
+              <div class="small mt-2" id="statusProgressKab"></div>
+            </form>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="tab-pane fade" id="content-input-ipds" role="tabpanel">
+      <div class="row justify-content-center"><div class="col-lg-10">
+        <div class="card card-dashboard">
+          <div class="card-header bg-info text-white fw-bold">Input Penerimaan IPDS</div>
+          <div class="card-body">
+            <p class="text-muted small">Kolom input mengikuti header pada sheet "Progres penerimaan IPDS".</p>
+            <form id="formProgressIPDS" onsubmit="submitProgress(event, 'Progres penerimaan IPDS', 'formProgressIPDS')">
+              <div class="row g-3" id="fieldsProgressIPDS"><div class="col-12 text-muted">Memuat struktur kolom...</div></div>
+              <div class="mt-4"><button class="btn btn-info text-white" type="submit"><i class="bi bi-save me-1"></i> Simpan Penerimaan IPDS</button></div>
+              <div class="small mt-2" id="statusProgressIPDS"></div>
+            </form>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 2. ALOKASI PETUGAS & SAMPEL -->
+    <div class="tab-pane fade" id="content-alokasi" role="tabpanel">
+      <div class="card card-dashboard">
+        <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <span class="fw-bold"><i class="bi bi-table me-2"></i> Daftar Sampel Alokasi Seruti TW IV</span>
+          <input type="text" id="searchAlokasi" class="form-control form-control-sm w-auto" placeholder="Cari Desa/PCL/NKS..." onkeyup="filterAlokasi()">
+        </div>
+        <div class="card-body p-0 table-responsive">
+          <table class="table table-hover table-bordered mb-0 align-middle" id="tableAlokasi">
+            <thead class="table-light text-center">
+              <tr>
+                <th>NKS</th>
+                <th>Kecamatan</th>
+                <th>Desa</th>
+                <th>SLS</th>
+                <th>PCL</th>
+                <th>PML</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="6" class="text-center py-4">Memuat data alokasi...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. FORM INPUT DOKUMENTASI & CETAK PDF -->
+    <div class="tab-pane fade" id="content-form" role="tabpanel">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <div class="card card-dashboard">
+            <div class="card-header bg-primary text-white py-3 text-center">
+              <h5 class="fw-bold mb-0">Form Input Dokumentasi Lapangan & Cetak PDF</h5>
+              <small>Data langsung tersimpan di Sheet Dokumentasi & menghasilkan Laporan PDF</small>
+            </div>
+            <div class="card-body p-4">
+              <form id="formDokumentasi" onsubmit="handleFormSubmit(event)">
+                <div class="row g-3">
+                  <div class="col-md-8">
+                    <label class="form-label fw-semibold">Nama Petugas <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputNama" placeholder="Nama Anda" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label fw-semibold">Status <span class="text-danger">*</span></label>
+                    <select class="form-select" id="inputStatus" required>
+                      <option value="PCL" selected>PCL</option>
+                      <option value="PML">PML</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Tanggal Lapangan <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="inputTanggal" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Nama PCL <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputNamaPcl" placeholder="Nama PCL bertugas" required>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Kecamatan <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputKecamatan" placeholder="Contoh: Slawi" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Desa / Kelurahan <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputDesa" placeholder="Contoh: Dukuhwringin" required>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label fw-semibold">Perangkat Desa yang Ditemui & Jabatannya <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputPerangkat" placeholder="Contoh: SLAMET, SEKDES DESA PAMIRITAN" required>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label fw-semibold">Ringkasan Hasil Lapangan <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="inputRingkasan" rows="3" placeholder="Uraian kegiatan lapangan..." required></textarea>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label fw-semibold">Fenomena Lapangan <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="inputFenomena" rows="3" placeholder="Kendala atau fenomena temuan..." required></textarea>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Upload Foto 1</label>
+                    <input type="file" class="form-control" id="fileFoto1" accept="image/*" onchange="previewAndConvert(this, 'foto1')">
+                    <img id="previewFoto1" class="img-fluid preview-box w-100" alt="Preview 1">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Upload Foto 2</label>
+                    <input type="file" class="form-control" id="fileFoto2" accept="image/*" onchange="previewAndConvert(this, 'foto2')">
+                    <img id="previewFoto2" class="img-fluid preview-box w-100" alt="Preview 2">
+                  </div>
+
+                  <div class="col-12 text-center mt-4">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg px-5 shadow">
+                      <i class="bi bi-save2 me-1"></i> Simpan & Unduh PDF
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. RIWAYAT DOKUMENTASI -->
+    <div class="tab-pane fade" id="content-riwayat" role="tabpanel">
+      <div class="card card-dashboard">
+        <div class="card-header bg-white py-3 fw-bold">
+          <i class="bi bi-clock-history me-2"></i> Laporan Dokumentasi Lapangan Terakhir
+        </div>
+        <div class="card-body p-0 table-responsive">
+          <table class="table table-hover table-striped mb-0 align-middle" id="tableDokumentasi">
+            <thead class="table-light text-center">
+              <tr>
+                <th>Tanggal</th>
+                <th>Nama</th>
+                <th>Desa / Kec</th>
+                <th>Perangkat Ditemui</th>
+                <th>Ringkasan</th>
+                <th>Foto</th>
+                <th>Unduh PDF</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="7" class="text-center py-4">Memuat data dokumentasi...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. TAUTAN PENTING -->
+    <div class="tab-pane fade" id="content-links" role="tabpanel">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card card-dashboard p-3">
+            <h5 class="fw-bold"><i class="bi bi-cloud-upload text-primary me-2"></i> Upload Lembar Kerja (LK)</h5>
+            <p class="text-muted small">Tautan langsung untuk mengunggah LK hasil pencacahan.</p>
+            <a href="#" id="linkUploadLK" target="_blank" class="btn btn-outline-primary">Buka Folder Upload LK</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-dashboard p-3">
+            <h5 class="fw-bold"><i class="bi bi-exclamation-triangle text-warning me-2"></i> Konfirmasi Anomali</h5>
+            <p class="text-muted small">Daftar anomali dan konfirmasi data lapangan.</p>
+            <a href="#" id="linkAnomali" target="_blank" class="btn btn-outline-warning">Buka Tabel Anomali</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // MASUKKAN URL DEPLOYMENT APPS SCRIPT ANDA DI SINI
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec";
+  const UPLOAD_LK_URL = "https://drive.google.com/drive/folders/17RBOmYTG6sREG4AIGjao7aJ46Bx05qmx?usp=drive_link";
+
+  let foto1Base64 = "", foto1FileName = "";
+  let foto2Base64 = "", foto2FileName = "";
+  let alokasiDataStore = [];
+
+  document.getElementById('inputTanggal').valueAsDate = new Date();
+
+  // Load Data Dashboard saat halaman pertama dibuka
+  window.addEventListener('DOMContentLoaded', fetchDashboardData);
+
+  function fetchDashboardData() {
+    fetch(WEB_APP_URL + "?action=getDashboard")
+      .then(res => res.json())
+      .then(resp => {
+        if (resp.success) {
+          renderDashboard(resp.data);
         }
-      };
-      reader.readAsDataURL(file);
+      })
+      .catch(err => console.error("Gagal load data:", err));
+  }
+
+  function renderDashboard(data) {
+    document.getElementById('linkUploadLK').href = UPLOAD_LK_URL;
+    // 1. KPI Cards
+    if (data.alokasi) {
+      document.getElementById('kpiTotalSampel').innerText = data.alokasi.length;
+      const uniquePetugas = new Set(data.alokasi.map(a => a.pcl).concat(data.alokasi.map(a => a.pml)));
+      document.getElementById('kpiTotalPetugas').innerText = uniquePetugas.size;
+    }
+    if (data.dokumentasi) {
+      document.getElementById('kpiTotalDok').innerText = data.dokumentasi.length;
     }
 
-    // Submit Form Dokumentasi
-    function submitFormDokumentasi(e) {
-      e.preventDefault();
-      const btn = document.getElementById('btnSubmitForm');
-      btn.disabled = true;
-      btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan & Membuat PDF...`;
+    // 2. Render Alokasi
+    alokasiDataStore = data.alokasi || [];
+    renderAlokasiTable(alokasiDataStore);
 
-      const payload = {
-        nama: document.getElementById('inputNama').value,
-        status: document.getElementById('inputStatus').value,
-        tanggalLapangan: document.getElementById('inputTanggal').value,
-        namaPerangkat: document.getElementById('inputPerangkat').value,
-        ringkasan: document.getElementById('inputRingkasan').value,
-        fenomena: document.getElementById('inputFenomena').value,
-        desa: document.getElementById('inputDesa').value,
-        kecamatan: document.getElementById('inputKecamatan').value,
-        namaPcl: document.getElementById('inputNamaPcl').value,
-        foto1Data: foto1Base64,
-        foto1Name: foto1FileName,
-        foto2Data: foto2Base64,
-        foto2Name: foto2FileName
-      };
+    // 3. Render Progres Tables
+    renderSimpleTable('tableProgresPendataan', data.progresPendataan);
+    renderSimpleTable('tableProgresKab', data.progresPenerimaanKab);
+    renderSimpleTable('tableProgresIPDS', data.progresIpds);
 
-      fetch(WEB_APP_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          action: 'submitDokumentasi',
-          payload: payload
-        })
-      })
-      .then(r => r.json())
-      .then(res => {
-        if (res.success) {
-          alert("Laporan berhasil tersimpan dan PDF telah dibuat!");
-          if (res.pdfUrl) window.open(res.pdfUrl, '_blank');
-          document.getElementById('formDokumentasi').reset();
-          document.getElementById('inputTanggal').valueAsDate = new Date();
-          document.getElementById('prevFoto1').style.display = 'none';
-          document.getElementById('prevFoto2').style.display = 'none';
-          foto1Base64 = "";
-          foto2Base64 = "";
-          loadAllData();
-        } else {
-          alert("Gagal: " + res.message);
-        }
-      })
-      .catch(err => alert("Terjadi kesalahan: " + err))
-      .finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = `<i class="bi bi-cloud-arrow-up-fill me-2"></i> Simpan &amp; Unduh PDF`;
-      });
+    renderProgressForm('fieldsProgressPendataan', data.progresPendataan);
+    renderProgressForm('fieldsProgressKab', data.progresPenerimaanKab);
+    renderProgressForm('fieldsProgressIPDS', data.progresIpds);
+
+    // 4. Render Riwayat Dokumentasi
+    renderDokumentasiTable(data.dokumentasi || []);
+
+    // 5. Links
+    if (data.links && data.links.length > 0) {
+      document.getElementById('linkUploadLK').href = UPLOAD_LK_URL;
+      if (data.links[0].anomali) document.getElementById('linkAnomali').href = data.links[0].anomali;
     }
-  </script>
+  }
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
+  // Membuat form input otomatis berdasarkan baris header pada masing-masing sheet.
+  function renderProgressForm(containerId, rows) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    if (!rows || !rows.length || !rows[0].length) {
+      container.innerHTML = '<div class="col-12 text-danger">Header sheet belum tersedia. Isi baris pertama sheet dengan nama kolom.</div>';
+      return;
+    }
+    const headers = rows[0];
+    container.innerHTML = headers.map((header, index) => {
+      const label = String(header || ('Kolom ' + (index + 1)));
+      return `<div class="col-md-6">
+        <label class="form-label fw-semibold">${escapeHtml(label)}</label>
+        <input type="text" class="form-control progress-value" data-index="${index}" data-header="${escapeHtml(label)}" placeholder="Isi ${escapeHtml(label)}">
+      </div>`;
+    }).join('');
+  }
+
+  function submitProgress(event, sheetName, formId) {
+    event.preventDefault();
+    const form = document.getElementById(formId);
+    const button = form.querySelector('button[type="submit"]');
+    const statusId = formId === 'formProgressPendataan' ? 'statusProgressPendataan' :
+                     formId === 'formProgressKab' ? 'statusProgressKab' : 'statusProgressIPDS';
+    const status = document.getElementById(statusId);
+    const fields = Array.from(form.querySelectorAll('.progress-value'));
+    const values = fields.map(field => field.value.trim());
+    if (!values.some(Boolean)) {
+      status.className = 'small mt-2 text-danger';
+      status.textContent = 'Isi minimal satu kolom sebelum menyimpan.';
+      return;
+    }
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan...';
+    status.textContent = '';
+
+    fetch(WEB_APP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'saveProgress', sheetName: sheetName, values: values })
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (!result.success) throw new Error(result.message || 'Gagal menyimpan progres.');
+      status.className = 'small mt-2 text-success';
+      status.textContent = result.message;
+      form.reset();
+      fetchDashboardData();
+    })
+    .catch(error => {
+      status.className = 'small mt-2 text-danger';
+      status.textContent = 'Gagal menyimpan: ' + error.message;
+    })
+    .finally(() => {
+      button.disabled = false;
+      button.innerHTML = '<i class="bi bi-save me-1"></i> Simpan';
+    });
+  }
+
+  function renderAlokasiTable(items) {
+    const tbody = document.querySelector('#tableAlokasi tbody');
+    if (!items.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center py-3">Tidak ada data alokasi.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = items.map(a => `
+      <tr>
+        <td class="text-center fw-bold text-primary">${a.nks || '-'}</td>
+        <td>${a.kec || '-'}</td>
+        <td>${a.desa || '-'}</td>
+        <td class="small">${a.sls || '-'}</td>
+        <td class="fw-semibold">${a.pcl || '-'}</td>
+        <td class="fw-semibold text-secondary">${a.pml || '-'}</td>
+      </tr>
+    `).join('');
+  }
+
+  function filterAlokasi() {
+    const q = document.getElementById('searchAlokasi').value.toLowerCase();
+    const filtered = alokasiDataStore.filter(a => 
+      (a.nks && a.nks.toString().toLowerCase().includes(q)) ||
+      (a.desa && a.desa.toLowerCase().includes(q)) ||
+      (a.kec && a.kec.toLowerCase().includes(q)) ||
+      (a.pcl && a.pcl.toLowerCase().includes(q)) ||
+      (a.pml && a.pml.toLowerCase().includes(q))
+    );
+    renderAlokasiTable(filtered);
+  }
+
+  function renderSimpleTable(tableId, rawRows) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    if (!rawRows || rawRows.length === 0) {
+      table.querySelector('thead').innerHTML = '<tr><th>Belum ada data</th></tr>';
+      table.querySelector('tbody').innerHTML = '';
+      return;
+    }
+    let thead = '<tr>' + rawRows[0].map(h => `<th>${h}</th>`).join('') + '</tr>';
+    let tbody = rawRows.slice(1).map(row => 
+      '<tr>' + row.map(c => `<td>${c}</td>`).join('') + '</tr>'
+    ).join('');
+    table.querySelector('thead').innerHTML = thead;
+    table.querySelector('tbody').innerHTML = tbody;
+  }
+
+  function renderDokumentasiTable(items) {
+    const tbody = document.querySelector('#tableDokumentasi tbody');
+    if (!items.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="text-center py-3">Belum ada dokumentasi lapangan.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = items.map(d => `
+      <tr>
+        <td class="text-nowrap small text-center">${d.tanggal}</td>
+        <td class="fw-bold">${d.nama} <span class="badge bg-secondary">${d.status}</span></td>
+        <td>${d.desa}, ${d.kecamatan}</td>
+        <td class="small">${d.perangkat}</td>
+        <td class="small text-truncate" style="max-width: 250px;">${d.ringkasan}</td>
+        <td class="text-center text-nowrap">
+          ${d.foto1 ? `<a href="${d.foto1}" target="_blank" class="btn btn-xs btn-outline-primary me-1"><i class="bi bi-image"></i> 1</a>` : ''}
+          ${d.foto2 ? `<a href="${d.foto2}" target="_blank" class="btn btn-xs btn-outline-secondary"><i class="bi bi-image"></i> 2</a>` : ''}
+        </td>
+        <td class="text-center">
+          ${d.pdfUrl ? `<a href="${d.pdfUrl}" target="_blank" class="btn btn-sm btn-outline-danger"><i class="bi bi-file-earmark-pdf"></i> Unduh PDF</a>` : '<span class="text-muted small">Belum tersedia</span>'}
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Handle Foto Preview
+  function previewAndConvert(inputElement, target) {
+    const file = inputElement.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      if (target === 'foto1') {
+        foto1Base64 = e.target.result;
+        foto1FileName = file.name;
+        const p = document.getElementById('previewFoto1');
+        p.src = e.target.result;
+        p.style.display = 'block';
+      } else {
+        foto2Base64 = e.target.result;
+        foto2FileName = file.name;
+        const p = document.getElementById('previewFoto2');
+        p.src = e.target.result;
+        p.style.display = 'block';
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Submit Form Dokumentasi
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const submitBtn = document.getElementById('btnSubmit');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan & Membuat PDF...`;
+
+    const payload = {
+      nama: document.getElementById('inputNama').value,
+      status: document.getElementById('inputStatus').value,
+      tanggalLapangan: document.getElementById('inputTanggal').value,
+      namaPerangkat: document.getElementById('inputPerangkat').value,
+      ringkasan: document.getElementById('inputRingkasan').value,
+      fenomena: document.getElementById('inputFenomena').value,
+      desa: document.getElementById('inputDesa').value,
+      kecamatan: document.getElementById('inputKecamatan').value,
+      namaPcl: document.getElementById('inputNamaPcl').value,
+      foto1Data: foto1Base64,
+      foto1Name: foto1FileName,
+      foto2Data: foto2Base64,
+      foto2Name: foto2FileName
+    };
+
+    fetch(WEB_APP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: 'submitDokumentasi',
+        payload: payload
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("Data berhasil tersimpan dan PDF laporan berhasil dicetak!");
+        if (data.pdfUrl) window.open(data.pdfUrl, '_blank');
+        document.getElementById('formDokumentasi').reset();
+        document.getElementById('inputTanggal').valueAsDate = new Date();
+        document.getElementById('previewFoto1').style.display = 'none';
+        document.getElementById('previewFoto2').style.display = 'none';
+        foto1Base64 = "";
+        foto2Base64 = "";
+        fetchDashboardData(); // Refresh data galeri & KPI
+      } else {
+        alert("Gagal: " + data.message);
+      }
+    })
+    .catch(err => alert("Terjadi kesalahan: " + err))
+    .finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<i class="bi bi-save2 me-1"></i> Simpan & Unduh PDF`;
+    });
+  }
+</script>
 </body>
 </html>

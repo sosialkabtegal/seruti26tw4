@@ -3,222 +3,793 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form Dokumentasi Seruti TW 4 2026</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Dashboard SERUTI TW IV 2026 - BPS Kabupaten Tegal</title>
+  
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
   <style>
+    :root {
+      --bps-blue: #0b3954;
+      --bps-primary: #1565c0;
+      --bps-accent: #00a896;
+      --bps-bg: #f3f6f9;
+      --card-shadow: 0 8px 24px rgba(149, 157, 165, 0.12);
+    }
+
     body {
-      background-color: #f4f6f9;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 20px 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bps-bg);
+      color: #334155;
+      min-height: 100vh;
     }
-    .card-custom {
+
+    /* Navbar Header */
+    .navbar-header {
+      background: linear-gradient(135deg, #0b3954 0%, #1565c0 100%);
+      padding: 16px 0;
+      box-shadow: 0 4px 20px rgba(11, 57, 84, 0.2);
+    }
+    .brand-title {
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      font-size: 1.35rem;
+    }
+
+    /* Modern Tabs */
+    .custom-nav-tabs {
+      border-bottom: 2px solid #e2e8f0;
+      gap: 8px;
+    }
+    .custom-nav-tabs .nav-link {
       border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      background: #ffffff;
+      color: #64748b;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 10px;
+      transition: all 0.25s ease;
+      font-size: 0.95rem;
     }
-    .card-header-custom {
-      background: #003366;
-      color: #ffffff;
-      border-radius: 12px 12px 0 0 !important;
-      padding: 20px;
+    .custom-nav-tabs .nav-link:hover {
+      color: var(--bps-primary);
+      background-color: #e2e8f0;
+    }
+    .custom-nav-tabs .nav-link.active {
+      color: #fff;
+      background: var(--bps-primary);
+      box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
+    }
+
+    /* Metric Cards */
+    .stat-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+    }
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+
+    /* Content Cards */
+    .content-box {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 25px;
+      overflow: hidden;
+    }
+    .content-box-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      background: #fafcff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Table Design */
+    .table-modern thead th {
+      background-color: #f8fafc;
+      color: #475569;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      padding: 14px 16px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .table-modern tbody td {
+      padding: 14px 16px;
+      vertical-align: middle;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    /* Ruta Badge Matrix */
+    .ruta-badge {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      line-height: 22px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-align: center;
+      border-radius: 6px;
+      margin: 1px;
+    }
+    .ruta-badge.done {
+      background-color: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+    .ruta-badge.pending {
+      background-color: #f1f5f9;
+      color: #94a3b8;
+      border: 1px dashed #cbd5e1;
+    }
+
+    /* Photo Cards */
+    .photo-card {
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      box-shadow: var(--card-shadow);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .photo-thumb-container {
+      height: 200px;
+      background: #f8fafc;
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .photo-thumb:hover {
+      transform: scale(1.05);
     }
     .preview-box {
-      max-height: 180px;
+      max-height: 200px;
       object-fit: cover;
       display: none;
       border-radius: 8px;
       margin-top: 10px;
-      border: 1px solid #ddd;
+      border: 1px solid #cbd5e1;
     }
   </style>
 </head>
 <body>
 
-<div class="container my-3">
-  <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10">
-      <div class="card card-custom">
-        <div class="card-header card-header-custom text-center">
-          <h4 class="mb-1 fw-bold">FORM DOKUMENTASI LAPANGAN</h4>
-          <p class="mb-0 small">Survei Ekonomi Rumah Tangga Triwulanan (SERUTI) TW IV 2026</p>
+  <!-- Top Navbar Header -->
+  <header class="navbar-header text-white mb-4">
+    <div class="container-xl d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-3">
+        <div class="bg-white text-primary p-2 rounded-3 shadow-sm d-flex align-items-center justify-content-center" style="width:44px; height:44px;">
+          <i class="bi bi-pie-chart-fill fs-4"></i>
         </div>
+        <div>
+          <h1 class="brand-title mb-0">SERUTI TW IV 2026</h1>
+          <span class="small opacity-75">BPS KABUPATEN TEGAL &bull; Survei Ekonomi Rumah Tangga Triwulanan</span>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-outline-light btn-sm rounded-pill px-3" onclick="loadAllData()">
+          <i class="bi bi-arrow-clockwise me-1"></i> Perbarui Data
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container-xl">
+    
+    <!-- Navigation Tabs -->
+    <ul class="nav custom-nav-tabs mb-4 flex-nowrap overflow-auto" id="mainTab" role="tablist">
+      <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabDashboard">
+          <i class="bi bi-speedometer2 me-1"></i> Dashboard & Progres
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabAlokasi">
+          <i class="bi bi-people-fill me-1"></i> Alokasi Sampel
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabDokumentasi">
+          <i class="bi bi-file-earmark-pdf-fill me-1"></i> Input Dokumentasi & Cetak PDF
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabGaleri">
+          <i class="bi bi-images me-1"></i> Galeri Lapangan
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabTautan">
+          <i class="bi bi-link-45deg me-1"></i> Tautan Penting
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="mainTabContent">
+      
+      <!-- ================= TAB 1: DASHBOARD ================= -->
+      <div class="tab-pane fade show active" id="tabDashboard">
         
-        <div class="card-body p-4">
-          <form id="formDokumentasi" onsubmit="handleFormSubmit(event)">
-            
-            <div class="row g-3">
-              <!-- NAMA & STATUS -->
-              <div class="col-md-8">
-                <label for="inputNama" class="form-label fw-semibold">Nama Petugas <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputNama" placeholder="Masukkan nama lengkap" required>
-              </div>
-              <div class="col-md-4">
-                <label for="inputStatus" class="form-label fw-semibold">Status <span class="text-danger">*</span></label>
-                <select class="form-select" id="inputStatus" required>
-                  <option value="PCL" selected>PCL</option>
-                  <option value="PML">PML</option>
-                </select>
-              </div>
-
-              <!-- TANGGAL & NAMA PCL -->
-              <div class="col-md-6">
-                <label for="inputTanggal" class="form-label fw-semibold">Tanggal Lapangan <span class="text-danger">*</span></label>
-                <input type="date" class="form-control" id="inputTanggal" required>
-              </div>
-              <div class="col-md-6">
-                <label for="inputNamaPcl" class="form-label fw-semibold">Nama PCL <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputNamaPcl" placeholder="Nama PCL yang bertugas" required>
-              </div>
-
-              <!-- KECAMATAN & DESA -->
-              <div class="col-md-6">
-                <label for="inputKecamatan" class="form-label fw-semibold">Kecamatan <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputKecamatan" placeholder="Contoh: Slawi" required>
-              </div>
-              <div class="col-md-6">
-                <label for="inputDesa" class="form-label fw-semibold">Desa / Kelurahan <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputDesa" placeholder="Contoh: Dukuhwringin" required>
-              </div>
-
-              <!-- PERANGKAT DESA -->
-              <div class="col-12">
-                <label for="inputPerangkat" class="form-label fw-semibold">Nama Perangkat yang Ditemui & Jabatannya <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputPerangkat" placeholder="Contoh: SLAMET, SEKDES DESA PAMIRITAN" required>
-              </div>
-
-              <!-- RINGKASAN & FENOMENA -->
-              <div class="col-12">
-                <label for="inputRingkasan" class="form-label fw-semibold">Ringkasan Hasil Lapangan <span class="text-danger">*</span></label>
-                <textarea class="form-control" id="inputRingkasan" rows="3" placeholder="Tuliskan gambaran pelaksanaan pengawasan/pencacahan di lapangan" required></textarea>
-              </div>
-
-              <div class="col-12">
-                <label for="inputFenomena" class="form-label fw-semibold">Fenomena Lapangan <span class="text-danger">*</span></label>
-                <textarea class="form-control" id="inputFenomena" rows="3" placeholder="Tuliskan kendala, keunikan, atau temuan spesifik di lapangan" required></textarea>
-              </div>
-
-              <!-- UPLOAD FOTO 1 & 2 -->
-              <div class="col-md-6">
-                <label class="form-label fw-semibold">Upload Foto Dokumentasi 1</label>
-                <input type="file" class="form-control" id="fileFoto1" accept="image/*" onchange="previewAndConvert(this, 'foto1')">
-                <img id="previewFoto1" class="img-fluid preview-box w-100" alt="Preview Foto 1">
-              </div>
-
-              <div class="col-md-6">
-                <label class="form-label fw-semibold">Upload Foto Dokumentasi 2</label>
-                <input type="file" class="form-control" id="fileFoto2" accept="image/*" onchange="previewAndConvert(this, 'foto2')">
-                <img id="previewFoto2" class="img-fluid preview-box w-100" alt="Preview Foto 2">
-              </div>
-
-              <!-- TOMBOL AKSI -->
-              <div class="col-12 text-center mt-4">
-                <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg px-5 shadow-sm">
-                  Simpan & Unduh PDF
-                </button>
+        <!-- Scorecards -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="text-muted small fw-semibold">TOTAL SAMPEL</div>
+                  <h3 class="fw-bold mb-0 mt-1 text-primary" id="kpiSampel">--</h3>
+                  <small class="text-muted">Blok Sensus / SLS</small>
+                </div>
+                <div class="stat-icon bg-primary-subtle text-primary">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
               </div>
             </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="text-muted small fw-semibold">TOTAL PETUGAS</div>
+                  <h3 class="fw-bold mb-0 mt-1 text-success" id="kpiPetugas">--</h3>
+                  <small class="text-muted">PCL &amp; PML</small>
+                </div>
+                <div class="stat-icon bg-success-subtle text-success">
+                  <i class="bi bi-person-check-fill"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="text-muted small fw-semibold">RUTA TERCACAH</div>
+                  <h3 class="fw-bold mb-0 mt-1 text-info" id="kpiRuta">--</h3>
+                  <small class="text-muted" id="kpiRutaPersen">0% Target</small>
+                </div>
+                <div class="stat-icon bg-info-subtle text-info">
+                  <i class="bi bi-house-check-fill"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="text-muted small fw-semibold">LAPORAN MASUK</div>
+                  <h3 class="fw-bold mb-0 mt-1 text-warning" id="kpiLaporan">--</h3>
+                  <small class="text-muted">Dokumentasi Lapangan</small>
+                </div>
+                <div class="stat-icon bg-warning-subtle text-warning">
+                  <i class="bi bi-camera-fill"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          </form>
+        <!-- Monitoring Progres RUTA -->
+        <div class="content-box">
+          <div class="content-box-header">
+            <h6 class="fw-bold mb-0"><i class="bi bi-graph-up-arrow me-2 text-primary"></i> Progres Pendataan RUTA Lapangan (1–10)</h6>
+            <span class="badge bg-primary-subtle text-primary rounded-pill px-3" id="badgeCountPendataan">22 SLS</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-modern table-hover mb-0" id="tableProgresGrid">
+              <thead>
+                <tr>
+                  <th>NKS</th>
+                  <th>Kecamatan</th>
+                  <th>Desa</th>
+                  <th>PCL / PML</th>
+                  <th>Target RUTA (1 - 10)</th>
+                  <th class="text-center">Capaian</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td colspan="6" class="text-center py-4 text-muted">Sedang memuat data progres...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 2: ALOKASI ================= -->
+      <div class="tab-pane fade" id="tabAlokasi">
+        <div class="content-box">
+          <div class="content-box-header flex-wrap gap-2">
+            <h6 class="fw-bold mb-0"><i class="bi bi-person-lines-fill me-2 text-primary"></i> Alokasi Sampel dan Petugas Lapangan</h6>
+            <div class="col-12 col-md-4">
+              <input type="text" id="inputSearchAlokasi" class="form-control form-control-sm rounded-pill" placeholder="Cari Desa, Petugas, atau NKS..." onkeyup="filterAlokasi()">
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-modern table-hover mb-0" id="tableAlokasi">
+              <thead>
+                <tr>
+                  <th>NKS</th>
+                  <th>Kecamatan</th>
+                  <th>Desa</th>
+                  <th>SLS</th>
+                  <th>PCL</th>
+                  <th>PML</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td colspan="6" class="text-center py-4 text-muted">Memuat data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 3: FORM DOKUMENTASI ================= -->
+      <div class="tab-pane fade" id="tabDokumentasi">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="content-box">
+              <div class="content-box-header bg-primary text-white">
+                <div>
+                  <h6 class="fw-bold mb-1 text-white"><i class="bi bi-pencil-square me-2"></i> Form Dokumentasi &amp; Cetak Otomatis PDF</h6>
+                  <p class="small mb-0 opacity-75">Tersimpan ke sheet Dokumentasi &amp; template Laporan Pengawasan</p>
+                </div>
+              </div>
+              <div class="p-4">
+                <form id="formDokumentasi" onsubmit="submitFormDokumentasi(event)">
+                  <div class="row g-3">
+                    <div class="col-md-8">
+                      <label class="form-label fw-semibold">Nama Petugas <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="inputNama" placeholder="Nama Lengkap Anda" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label fw-semibold">Status <span class="text-danger">*</span></label>
+                      <select class="form-select" id="inputStatus" required>
+                        <option value="PCL">PCL</option>
+                        <option value="PML" selected>PML</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="form-label fw-semibold">Tanggal Lapangan <span class="text-danger">*</span></label>
+                      <input type="date" class="form-control" id="inputTanggal" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label fw-semibold">Nama PCL yang Didampingi <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="inputNamaPcl" placeholder="Nama Petugas PCL" required>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="form-label fw-semibold">Kecamatan <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="inputKecamatan" placeholder="Contoh: Balapulang" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label fw-semibold">Desa / Kelurahan <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="inputDesa" placeholder="Contoh: Harjowinangun" required>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-semibold">Perangkat Desa yang Ditemui &amp; Jabatannya <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="inputPerangkat" placeholder="Contoh: SLAMET, SEKDES DESA PAMIRITAN" required>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-semibold">Ringkasan Hasil Lapangan <span class="text-danger">*</span></label>
+                      <textarea class="form-control" id="inputRingkasan" rows="3" placeholder="Uraikan kondisi pengawasan, koordinasi desa, atau proses wawancara..." required></textarea>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-semibold">Fenomena Lapangan <span class="text-danger">*</span></label>
+                      <textarea class="form-control" id="inputFenomena" rows="3" placeholder="Kendala responden, anomali pengeluaran, komoditas khas, dll..." required></textarea>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="form-label fw-semibold">Foto Dokumentasi 1</label>
+                      <input type="file" class="form-control" id="fileFoto1" accept="image/*" onchange="handleImage(this, 'foto1')">
+                      <img id="prevFoto1" class="preview-box w-100" alt="Preview 1">
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="form-label fw-semibold">Foto Dokumentasi 2</label>
+                      <input type="file" class="form-control" id="fileFoto2" accept="image/*" onchange="handleImage(this, 'foto2')">
+                      <img id="prevFoto2" class="preview-box w-100" alt="Preview 2">
+                    </div>
+
+                    <div class="col-12 text-center mt-4">
+                      <button type="submit" id="btnSubmitForm" class="btn btn-primary btn-lg rounded-pill px-5 shadow">
+                        <i class="bi bi-cloud-arrow-up-fill me-2"></i> Simpan &amp; Unduh PDF
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 4: GALERI DOKUMENTASI ================= -->
+      <div class="tab-pane fade" id="tabGaleri">
+        <div class="row g-4" id="galleryContainer">
+          <div class="col-12 text-center py-5 text-muted">Memuat galeri dokumentasi...</div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 5: TAUTAN ================= -->
+      <div class="tab-pane fade" id="tabTautan">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="content-box p-4 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="stat-icon bg-primary-subtle text-primary"><i class="bi bi-cloud-arrow-up-fill"></i></div>
+                  <div>
+                    <h5 class="fw-bold mb-0">Upload Lembar Kerja (LK)</h5>
+                    <small class="text-muted">Folder Unggahan LK Pencacahan</small>
+                  </div>
+                </div>
+                <p class="text-muted small">Akses cepat menuju Google Drive tempat pengumpulan Lembar Kerja yang telah terisi.</p>
+              </div>
+              <a href="#" id="btnLinkLK" target="_blank" class="btn btn-outline-primary rounded-pill w-100 mt-3">
+                Buka Link Unggah LK <i class="bi bi-box-arrow-up-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="content-box p-4 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="stat-icon bg-warning-subtle text-warning"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                  <div>
+                    <h5 class="fw-bold mb-0">Tabel Konfirmasi Anomali</h5>
+                    <small class="text-muted">Spreadsheet Anomali Lapangan</small>
+                  </div>
+                </div>
+                <p class="text-muted small">Cek dan selesaikan data anomali atau *outlier* hasil pencacahan SERUTI TW IV.</p>
+              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1BndYmdADnqKAGxUpE590rcS3M69ozpVkueziNGjzfko/edit?usp=sharing" target="_blank" class="btn btn-outline-warning rounded-pill w-100 mt-3 text-dark fw-bold">
+                Buka Spreadsheet Anomali <i class="bi bi-box-arrow-up-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Lightbox Foto -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 bg-transparent">
+        <div class="modal-body p-0 text-center">
+          <img id="modalImgTag" src="" class="img-fluid rounded-4 shadow-lg" alt="Foto">
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  // GANTI DENGAN URL WEB APP HASIL DEPLOY APPS SCRIPT ANDA
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec";
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  let foto1Base64 = "";
-  let foto1FileName = "";
-  let foto2Base64 = "";
-  let foto2FileName = "";
+  <script>
+    // ========================================================
+    // GANTI DENGAN URL WEB APP HASIL DEPLOY APPS SCRIPT ANDA
+    // ========================================================
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec";
 
-  // Set tanggal default ke hari ini
-  document.getElementById('inputTanggal').valueAsDate = new Date();
+    let stateAlokasi = [];
+    let foto1Base64 = "", foto1FileName = "";
+    let foto2Base64 = "", foto2FileName = "";
 
-  // Fungsi preview dan konversi file foto ke Base64
-  function previewAndConvert(inputElement, target) {
-    const file = inputElement.files[0];
-    if (!file) return;
+    document.getElementById('inputTanggal').valueAsDate = new Date();
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      if (target === 'foto1') {
-        foto1Base64 = e.target.result;
-        foto1FileName = file.name;
-        const preview = document.getElementById('previewFoto1');
-        preview.src = e.target.result;
-        preview.style.display = 'block';
-      } else if (target === 'foto2') {
-        foto2Base64 = e.target.result;
-        foto2FileName = file.name;
-        const preview = document.getElementById('previewFoto2');
-        preview.src = e.target.result;
-        preview.style.display = 'block';
-      }
-    };
-    reader.readAsDataURL(file);
-  }
+    window.addEventListener('DOMContentLoaded', loadAllData);
 
-  // Fungsi Submit Form
-  function handleFormSubmit(event) {
-    event.preventDefault();
+    // Ambil Data dari Backend Apps Script
+    function loadAllData() {
+      fetch(WEB_APP_URL + "?action=getDashboard")
+        .then(res => res.json())
+        .then(res => {
+          if (res.success && res.data) {
+            populateDashboard(res.data);
+          }
+        })
+        .catch(err => {
+          console.warn("Gagal memuat otomatis, mencoba via POST fallback:", err);
+          fetch(WEB_APP_URL, {
+            method: "POST",
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: "getDashboard" })
+          })
+          .then(r => r.json())
+          .then(r => { if(r.success) populateDashboard(r.data); });
+        });
+    }
 
-    const submitBtn = document.getElementById('btnSubmit');
-    submitBtn.disabled = true;
-    submitBtn.innerText = "Sedang Menyimpan & Membuat PDF...";
+    // Render Data ke Tampilan
+    function populateDashboard(data) {
+      // 1. KPI Cards
+      stateAlokasi = data.alokasi || [];
+      document.getElementById('kpiSampel').innerText = stateAlokasi.length || 0;
+      
+      const petugasSet = new Set();
+      stateAlokasi.forEach(item => {
+        if (item.pcl) petugasSet.add(item.pcl.trim());
+        if (item.pml) petugasSet.add(item.pml.trim());
+      });
+      document.getElementById('kpiPetugas').innerText = petugasSet.size || 0;
+      document.getElementById('kpiLaporan').innerText = (data.dokumentasi || []).length;
 
-    const payload = {
-      nama: document.getElementById('inputNama').value,
-      status: document.getElementById('inputStatus').value,
-      tanggalLapangan: document.getElementById('inputTanggal').value,
-      namaPerangkat: document.getElementById('inputPerangkat').value,
-      ringkasan: document.getElementById('inputRingkasan').value,
-      fenomena: document.getElementById('inputFenomena').value,
-      desa: document.getElementById('inputDesa').value,
-      kecamatan: document.getElementById('inputKecamatan').value,
-      namaPcl: document.getElementById('inputNamaPcl').value,
-      foto1Data: foto1Base64,
-      foto1Name: foto1FileName,
-      foto2Data: foto2Base64,
-      foto2Name: foto2FileName
-    };
+      // 2. Render Tabel Alokasi
+      renderAlokasi(stateAlokasi);
 
-    fetch(WEB_APP_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        action: 'submitDokumentasi',
-        payload: payload
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        alert("Data berhasil tersimpan ke Spreadsheet dan PDF selesai dibuat!");
-        if (data.pdfUrl) {
-          window.open(data.pdfUrl, '_blank');
+      // 3. Render Progress Grid RUTA 1-10
+      renderProgresGrid(data.progresPendataan || []);
+
+      // 4. Render Galeri Foto
+      renderGaleri(data.dokumentasi || []);
+
+      // 5. Setup Link
+      if (data.links && data.links.length > 0) {
+        if (data.links[0].anomali) {
+          document.getElementById('btnLinkLK').href = data.links[0].anomali;
         }
-        document.getElementById('formDokumentasi').reset();
-        document.getElementById('inputTanggal').valueAsDate = new Date();
-        document.getElementById('previewFoto1').style.display = 'none';
-        document.getElementById('previewFoto2').style.display = 'none';
-        foto1Base64 = "";
-        foto2Base64 = "";
-      } else {
-        alert("Gagal: " + data.message);
       }
-    })
-    .catch(err => {
-      alert("Terjadi kesalahan koneksi: " + err);
-    })
-    .finally(() => {
-      submitBtn.disabled = false;
-      submitBtn.innerText = "Simpan & Unduh PDF";
-    });
-  }
-</script>
+    }
 
+    // Render Grid RUTA 1 - 10
+    function renderProgresGrid(rawRows) {
+      const tbody = document.querySelector('#tableProgresGrid tbody');
+      if (!rawRows || rawRows.length < 3) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada data progres pendataan.</td></tr>';
+        return;
+      }
+
+      let totalRutaDone = 0;
+      let totalTargetRuta = 0;
+      let html = '';
+
+      // Baris 0: Header "RUTA", Baris 1: Kolom [NKS, KEC, DESA, SLS, PCL, PML, 1, 2, ... 10]
+      const dataRows = rawRows.slice(2);
+      document.getElementById('badgeCountPendataan').innerText = dataRows.length + ' SLS Sampel';
+
+      dataRows.forEach(row => {
+        const nks = row[0];
+        const kec = row[1];
+        const desa = row[2];
+        const pcl = row[4];
+        const pml = row[5];
+
+        let countDone = 0;
+        let rutaBadges = '';
+
+        for (let r = 1; r <= 10; r++) {
+          const val = (row[5 + r] || "").toString().trim();
+          const isDone = (val !== "" && val !== "0" && val !== "-");
+          if (isDone) countDone++;
+          rutaBadges += `<span class="ruta-badge ${isDone ? 'done' : 'pending'}" title="RUTA ${r}: ${isDone ? 'Selesai' : 'Belum'}">${r}</span>`;
+        }
+
+        totalRutaDone += countDone;
+        totalTargetRuta += 10;
+        const percent = Math.round((countDone / 10) * 100);
+
+        html += `
+          <tr>
+            <td class="fw-bold text-primary">${nks}</td>
+            <td>${kec}</td>
+            <td class="fw-semibold">${desa}</td>
+            <td>
+              <div class="small fw-semibold">${pcl}</div>
+              <div class="text-muted" style="font-size: 0.75rem;">PML: ${pml}</div>
+            </td>
+            <td>${rutaBadges}</td>
+            <td class="text-center">
+              <span class="badge ${percent === 100 ? 'bg-success' : percent > 0 ? 'bg-primary' : 'bg-light text-muted'} rounded-pill">
+                ${countDone}/10 (${percent}%)
+              </span>
+            </td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+      document.getElementById('kpiRuta').innerText = totalRutaDone;
+      const totalPercent = totalTargetRuta > 0 ? Math.round((totalRutaDone / totalTargetRuta) * 100) : 0;
+      document.getElementById('kpiRutaPersen').innerText = `${totalPercent}% dari ${totalTargetRuta} Target`;
+    }
+
+    // Render Tabel Alokasi
+    function renderAlokasi(list) {
+      const tbody = document.querySelector('#tableAlokasi tbody');
+      if (!list || !list.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">Tidak ada data alokasi.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(a => `
+        <tr>
+          <td class="fw-bold text-primary">${a.nks}</td>
+          <td>${a.kec}</td>
+          <td class="fw-semibold">${a.desa}</td>
+          <td class="small text-muted">${a.sls || '-'}</td>
+          <td class="fw-semibold">${a.pcl}</td>
+          <td class="text-muted">${a.pml}</td>
+        </tr>
+      `).join('');
+    }
+
+    function filterAlokasi() {
+      const q = document.getElementById('inputSearchAlokasi').value.toLowerCase();
+      const filtered = stateAlokasi.filter(a => 
+        (a.nks && a.nks.toLowerCase().includes(q)) ||
+        (a.desa && a.desa.toLowerCase().includes(q)) ||
+        (a.kec && a.kec.toLowerCase().includes(q)) ||
+        (a.pcl && a.pcl.toLowerCase().includes(q)) ||
+        (a.pml && a.pml.toLowerCase().includes(q))
+      );
+      renderAlokasi(filtered);
+    }
+
+    // Convert Link Google Drive ke URL Thumbnail yang bisa dirender <img>
+    function getDriveThumb(url) {
+      if (!url) return '';
+      const match = url.match(/[-\w]{25,}/);
+      return match ? `https://lh3.googleusercontent.com/d/${match[0]}` : url;
+    }
+
+    // Render Galeri
+    function renderGaleri(items) {
+      const container = document.getElementById('galleryContainer');
+      if (!items || !items.length) {
+        container.innerHTML = '<div class="col-12 text-center py-5 text-muted">Belum ada dokumentasi lapangan yang diunggah.</div>';
+        return;
+      }
+
+      container.innerHTML = items.map(d => {
+        const thumb1 = getDriveThumb(d.foto1);
+        const thumb2 = getDriveThumb(d.foto2);
+
+        return `
+          <div class="col-md-6 col-lg-4">
+            <div class="photo-card">
+              <div class="photo-thumb-container d-flex">
+                ${thumb1 ? `<img src="${thumb1}" class="photo-thumb ${thumb2 ? 'w-50' : 'w-100'}" onclick="showPhotoModal('${thumb1}')" style="cursor:pointer;" alt="Foto 1">` : ''}
+                ${thumb2 ? `<img src="${thumb2}" class="photo-thumb w-50" onclick="showPhotoModal('${thumb2}')" style="cursor:pointer;" alt="Foto 2">` : ''}
+                ${!thumb1 && !thumb2 ? '<div class="d-flex align-items-center justify-content-center w-100 text-muted"><i class="bi bi-image fs-1 opacity-25"></i></div>' : ''}
+              </div>
+              <div class="p-3 d-flex flex-column justify-content-between flex-grow-1">
+                <div>
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="badge bg-primary-subtle text-primary fw-semibold">${d.status || 'PCL'}</span>
+                    <small class="text-muted"><i class="bi bi-calendar3 me-1"></i>${d.tanggal}</small>
+                  </div>
+                  <h6 class="fw-bold mb-1">${d.nama}</h6>
+                  <p class="small text-secondary mb-2"><i class="bi bi-geo-alt me-1"></i>${d.desa}, Kec. ${d.kecamatan}</p>
+                  <p class="small text-muted mb-2 text-truncate" style="max-width: 100%;" title="${d.ringkasan}">${d.ringkasan}</p>
+                </div>
+                <div class="pt-2 border-top small text-muted">
+                  <strong>Bertemu:</strong> ${d.perangkat || '-'}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function showPhotoModal(url) {
+      document.getElementById('modalImgTag').src = url;
+      new bootstrap.Modal(document.getElementById('imageModal')).show();
+    }
+
+    // Preview File Gambar Base64
+    function handleImage(el, target) {
+      const file = el.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        if (target === 'foto1') {
+          foto1Base64 = e.target.result;
+          foto1FileName = file.name;
+          const p = document.getElementById('prevFoto1');
+          p.src = e.target.result;
+          p.style.display = 'block';
+        } else {
+          foto2Base64 = e.target.result;
+          foto2FileName = file.name;
+          const p = document.getElementById('prevFoto2');
+          p.src = e.target.result;
+          p.style.display = 'block';
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Submit Form Dokumentasi
+    function submitFormDokumentasi(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmitForm');
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan & Membuat PDF...`;
+
+      const payload = {
+        nama: document.getElementById('inputNama').value,
+        status: document.getElementById('inputStatus').value,
+        tanggalLapangan: document.getElementById('inputTanggal').value,
+        namaPerangkat: document.getElementById('inputPerangkat').value,
+        ringkasan: document.getElementById('inputRingkasan').value,
+        fenomena: document.getElementById('inputFenomena').value,
+        desa: document.getElementById('inputDesa').value,
+        kecamatan: document.getElementById('inputKecamatan').value,
+        namaPcl: document.getElementById('inputNamaPcl').value,
+        foto1Data: foto1Base64,
+        foto1Name: foto1FileName,
+        foto2Data: foto2Base64,
+        foto2Name: foto2FileName
+      };
+
+      fetch(WEB_APP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'submitDokumentasi',
+          payload: payload
+        })
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          alert("Laporan berhasil tersimpan dan PDF telah dibuat!");
+          if (res.pdfUrl) window.open(res.pdfUrl, '_blank');
+          document.getElementById('formDokumentasi').reset();
+          document.getElementById('inputTanggal').valueAsDate = new Date();
+          document.getElementById('prevFoto1').style.display = 'none';
+          document.getElementById('prevFoto2').style.display = 'none';
+          foto1Base64 = "";
+          foto2Base64 = "";
+          loadAllData();
+        } else {
+          alert("Gagal: " + res.message);
+        }
+      })
+      .catch(err => alert("Terjadi kesalahan: " + err))
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="bi bi-cloud-arrow-up-fill me-2"></i> Simpan &amp; Unduh PDF`;
+      });
+    }
+  </script>
 </body>
 </html>

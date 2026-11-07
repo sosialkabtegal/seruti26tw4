@@ -37,3 +37,57 @@ function handleFormSubmit(event) {
   })
   .catch(err => alert("Error: " + err));
 }
+<!-- Tombol pada Form Menu Dokumentasi -->
+<button type="button" id="btnSimpanPdf" class="btn btn-primary" onclick="simpanDanDownloadPdf()">
+  Simpan & Unduh PDF
+</button>
+<span id="loadingStatus" style="display:none; margin-left: 10px;">Sedang memproses & membuat PDF...</span>
+
+<script>
+const SCRIPT_URL = "MASUKKAN_URL_WEB_APP_APPS_SCRIPT_ANDA_DI_SINI";
+
+async function simpanDanDownloadPdf() {
+  const btn = document.getElementById("btnSimpanPdf");
+  const status = document.getElementById("loadingStatus");
+  btn.disabled = true;
+  status.style.display = "inline";
+
+  // Ambil nilai dari elemen form input Anda
+  const payload = {
+    nama: document.getElementById("inputNama").value,
+    status: "PCL",
+    tanggal: document.getElementById("inputTanggal").value,
+    foto1_url: document.getElementById("inputFoto1").value, // Link Google Drive Foto 1
+    foto2_url: document.getElementById("inputFoto2").value, // Link Google Drive Foto 2
+    perangkat: document.getElementById("inputPerangkat").value,
+    ringkasan: document.getElementById("inputRingkasan").value,
+    fenomena: document.getElementById("inputFenomena").value,
+    desa: document.getElementById("inputDesa").value,
+    kecamatan: document.getElementById("inputKecamatan").value,
+    nama_pcl: document.getElementById("inputNamaPcl").value
+  };
+
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "text/plain;charset=utf-8" }
+    });
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+      alert("Laporan berhasil disimpan ke Spreadsheet!");
+      // Buka dan unduh PDF di tab baru
+      window.open(result.pdfUrl, "_blank");
+    } else {
+      alert("Terjadi kesalahan: " + result.message);
+    }
+  } catch (err) {
+    alert("Gagal menghubungi server: " + err);
+  } finally {
+    btn.disabled = false;
+    status.style.display = "none";
+  }
+}
+</script>

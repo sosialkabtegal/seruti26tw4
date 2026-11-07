@@ -1,113 +1,224 @@
-// Ganti Web App URL dengan URL Deployment Apps Script Anda
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec";
-
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec"; // Masukkan URL deployment Anda
-
-function handleFormSubmit(event) {
-  event.preventDefault();
-
-  const submitBtn = event.target.querySelector('button[type="submit"]') || document.getElementById('btnSubmit');
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.innerText = "Menyimpan & Membuat PDF...";
-  }
-
-  const payload = {
-    nama: document.getElementById('inputNama').value,
-    status: document.getElementById('inputStatus').value,
-    tanggalLapangan: document.getElementById('inputTanggal').value,
-    namaPerangkat: document.getElementById('inputPerangkat').value,
-    ringkasan: document.getElementById('inputRingkasan').value,
-    fenomena: document.getElementById('inputFenomena').value,
-    desa: document.getElementById('inputDesa').value,
-    kecamatan: document.getElementById('inputKecamatan').value,
-    namaPcl: document.getElementById('inputNamaPcl').value,
-    foto1Data: foto1Base64,
-    foto1Name: foto1FileName,
-    foto2Data: foto2Base64,
-    foto2Name: foto2FileName
-  };
-
-  fetch(WEB_APP_URL, {
-    method: 'POST',
-    body: JSON.stringify({
-      action: 'submitDokumentasi',
-      payload: payload
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("Data berhasil tersimpan dan PDF telah dibuat!");
-      // Buka dan unduh file PDF di tab baru
-      if (data.pdfUrl) {
-        window.open(data.pdfUrl, '_blank');
-      }
-    } else {
-      alert("Gagal: " + data.message);
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Dokumentasi Seruti TW 4 2026</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px 0;
     }
-  })
-  .catch(err => alert("Error: " + err))
-  .finally(() => {
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.innerText = "Simpan & Download PDF";
+    .card-custom {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      background: #ffffff;
     }
-  });
-}
+    .card-header-custom {
+      background: #003366;
+      color: #ffffff;
+      border-radius: 12px 12px 0 0 !important;
+      padding: 20px;
+    }
+    .preview-box {
+      max-height: 180px;
+      object-fit: cover;
+      display: none;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
 
-  
-<!-- Tombol pada Form Menu Dokumentasi -->
-<button type="button" id="btnSimpanPdf" class="btn btn-primary" onclick="simpanDanDownloadPdf()">
-  Simpan & Unduh PDF
-</button>
-<span id="loadingStatus" style="display:none; margin-left: 10px;">Sedang memproses & membuat PDF...</span>
+<div class="container my-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card card-custom">
+        <div class="card-header card-header-custom text-center">
+          <h4 class="mb-1 fw-bold">FORM DOKUMENTASI LAPANGAN</h4>
+          <p class="mb-0 small">Survei Ekonomi Rumah Tangga Triwulanan (SERUTI) TW IV 2026</p>
+        </div>
+        
+        <div class="card-body p-4">
+          <form id="formDokumentasi" onsubmit="handleFormSubmit(event)">
+            
+            <div class="row g-3">
+              <!-- NAMA & STATUS -->
+              <div class="col-md-8">
+                <label for="inputNama" class="form-label fw-semibold">Nama Petugas <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputNama" placeholder="Masukkan nama lengkap" required>
+              </div>
+              <div class="col-md-4">
+                <label for="inputStatus" class="form-label fw-semibold">Status <span class="text-danger">*</span></label>
+                <select class="form-select" id="inputStatus" required>
+                  <option value="PCL" selected>PCL</option>
+                  <option value="PML">PML</option>
+                </select>
+              </div>
+
+              <!-- TANGGAL & NAMA PCL -->
+              <div class="col-md-6">
+                <label for="inputTanggal" class="form-label fw-semibold">Tanggal Lapangan <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="inputTanggal" required>
+              </div>
+              <div class="col-md-6">
+                <label for="inputNamaPcl" class="form-label fw-semibold">Nama PCL <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputNamaPcl" placeholder="Nama PCL yang bertugas" required>
+              </div>
+
+              <!-- KECAMATAN & DESA -->
+              <div class="col-md-6">
+                <label for="inputKecamatan" class="form-label fw-semibold">Kecamatan <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputKecamatan" placeholder="Contoh: Slawi" required>
+              </div>
+              <div class="col-md-6">
+                <label for="inputDesa" class="form-label fw-semibold">Desa / Kelurahan <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputDesa" placeholder="Contoh: Dukuhwringin" required>
+              </div>
+
+              <!-- PERANGKAT DESA -->
+              <div class="col-12">
+                <label for="inputPerangkat" class="form-label fw-semibold">Nama Perangkat yang Ditemui & Jabatannya <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputPerangkat" placeholder="Contoh: SLAMET, SEKDES DESA PAMIRITAN" required>
+              </div>
+
+              <!-- RINGKASAN & FENOMENA -->
+              <div class="col-12">
+                <label for="inputRingkasan" class="form-label fw-semibold">Ringkasan Hasil Lapangan <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="inputRingkasan" rows="3" placeholder="Tuliskan gambaran pelaksanaan pengawasan/pencacahan di lapangan" required></textarea>
+              </div>
+
+              <div class="col-12">
+                <label for="inputFenomena" class="form-label fw-semibold">Fenomena Lapangan <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="inputFenomena" rows="3" placeholder="Tuliskan kendala, keunikan, atau temuan spesifik di lapangan" required></textarea>
+              </div>
+
+              <!-- UPLOAD FOTO 1 & 2 -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Upload Foto Dokumentasi 1</label>
+                <input type="file" class="form-control" id="fileFoto1" accept="image/*" onchange="previewAndConvert(this, 'foto1')">
+                <img id="previewFoto1" class="img-fluid preview-box w-100" alt="Preview Foto 1">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Upload Foto Dokumentasi 2</label>
+                <input type="file" class="form-control" id="fileFoto2" accept="image/*" onchange="previewAndConvert(this, 'foto2')">
+                <img id="previewFoto2" class="img-fluid preview-box w-100" alt="Preview Foto 2">
+              </div>
+
+              <!-- TOMBOL AKSI -->
+              <div class="col-12 text-center mt-4">
+                <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg px-5 shadow-sm">
+                  Simpan & Unduh PDF
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-const SCRIPT_URL = "MASUKKAN_URL_WEB_APP_APPS_SCRIPT_ANDA_DI_SINI";
+  // GANTI DENGAN URL WEB APP HASIL DEPLOY APPS SCRIPT ANDA
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec";
 
-async function simpanDanDownloadPdf() {
-  const btn = document.getElementById("btnSimpanPdf");
-  const status = document.getElementById("loadingStatus");
-  btn.disabled = true;
-  status.style.display = "inline";
+  let foto1Base64 = "";
+  let foto1FileName = "";
+  let foto2Base64 = "";
+  let foto2FileName = "";
 
-  // Ambil nilai dari elemen form input Anda
-  const payload = {
-    nama: document.getElementById("inputNama").value,
-    status: "PCL",
-    tanggal: document.getElementById("inputTanggal").value,
-    foto1_url: document.getElementById("inputFoto1").value, // Link Google Drive Foto 1
-    foto2_url: document.getElementById("inputFoto2").value, // Link Google Drive Foto 2
-    perangkat: document.getElementById("inputPerangkat").value,
-    ringkasan: document.getElementById("inputRingkasan").value,
-    fenomena: document.getElementById("inputFenomena").value,
-    desa: document.getElementById("inputDesa").value,
-    kecamatan: document.getElementById("inputKecamatan").value,
-    nama_pcl: document.getElementById("inputNamaPcl").value
-  };
+  // Set tanggal default ke hari ini
+  document.getElementById('inputTanggal').valueAsDate = new Date();
 
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: { "Content-Type": "text/plain;charset=utf-8" }
-    });
+  // Fungsi preview dan konversi file foto ke Base64
+  function previewAndConvert(inputElement, target) {
+    const file = inputElement.files[0];
+    if (!file) return;
 
-    const result = await response.json();
-
-    if (result.status === "success") {
-      alert("Laporan berhasil disimpan ke Spreadsheet!");
-      // Buka dan unduh PDF di tab baru
-      window.open(result.pdfUrl, "_blank");
-    } else {
-      alert("Terjadi kesalahan: " + result.message);
-    }
-  } catch (err) {
-    alert("Gagal menghubungi server: " + err);
-  } finally {
-    btn.disabled = false;
-    status.style.display = "none";
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      if (target === 'foto1') {
+        foto1Base64 = e.target.result;
+        foto1FileName = file.name;
+        const preview = document.getElementById('previewFoto1');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      } else if (target === 'foto2') {
+        foto2Base64 = e.target.result;
+        foto2FileName = file.name;
+        const preview = document.getElementById('previewFoto2');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      }
+    };
+    reader.readAsDataURL(file);
   }
-}
+
+  // Fungsi Submit Form
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const submitBtn = document.getElementById('btnSubmit');
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Sedang Menyimpan & Membuat PDF...";
+
+    const payload = {
+      nama: document.getElementById('inputNama').value,
+      status: document.getElementById('inputStatus').value,
+      tanggalLapangan: document.getElementById('inputTanggal').value,
+      namaPerangkat: document.getElementById('inputPerangkat').value,
+      ringkasan: document.getElementById('inputRingkasan').value,
+      fenomena: document.getElementById('inputFenomena').value,
+      desa: document.getElementById('inputDesa').value,
+      kecamatan: document.getElementById('inputKecamatan').value,
+      namaPcl: document.getElementById('inputNamaPcl').value,
+      foto1Data: foto1Base64,
+      foto1Name: foto1FileName,
+      foto2Data: foto2Base64,
+      foto2Name: foto2FileName
+    };
+
+    fetch(WEB_APP_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'submitDokumentasi',
+        payload: payload
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("Data berhasil tersimpan ke Spreadsheet dan PDF selesai dibuat!");
+        if (data.pdfUrl) {
+          window.open(data.pdfUrl, '_blank');
+        }
+        document.getElementById('formDokumentasi').reset();
+        document.getElementById('inputTanggal').valueAsDate = new Date();
+        document.getElementById('previewFoto1').style.display = 'none';
+        document.getElementById('previewFoto2').style.display = 'none';
+        foto1Base64 = "";
+        foto2Base64 = "";
+      } else {
+        alert("Gagal: " + data.message);
+      }
+    })
+    .catch(err => {
+      alert("Terjadi kesalahan koneksi: " + err);
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Simpan & Unduh PDF";
+    });
+  }
 </script>
+
+</body>
+</html>

@@ -1,8 +1,16 @@
 // Ganti Web App URL dengan URL Deployment Apps Script Anda
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec";
 
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec"; // Masukkan URL deployment Anda
+
 function handleFormSubmit(event) {
   event.preventDefault();
+
+  const submitBtn = event.target.querySelector('button[type="submit"]') || document.getElementById('btnSubmit');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Menyimpan & Membuat PDF...";
+  }
 
   const payload = {
     nama: document.getElementById('inputNama').value,
@@ -30,13 +38,25 @@ function handleFormSubmit(event) {
   .then(res => res.json())
   .then(data => {
     if (data.success) {
-      alert("Data berhasil tersimpan!");
+      alert("Data berhasil tersimpan dan PDF telah dibuat!");
+      // Buka dan unduh file PDF di tab baru
+      if (data.pdfUrl) {
+        window.open(data.pdfUrl, '_blank');
+      }
     } else {
       alert("Gagal: " + data.message);
     }
   })
-  .catch(err => alert("Error: " + err));
+  .catch(err => alert("Error: " + err))
+  .finally(() => {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Simpan & Download PDF";
+    }
+  });
 }
+
+  
 <!-- Tombol pada Form Menu Dokumentasi -->
 <button type="button" id="btnSimpanPdf" class="btn btn-primary" onclick="simpanDanDownloadPdf()">
   Simpan & Unduh PDF

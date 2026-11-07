@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Portal Monitoring SERUTI TW IV 2026 - BPS</title>
+  <title>Portal SERUTI TW IV 2026 - BPS</title>
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons -->
@@ -28,13 +28,21 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .nav-tabs .nav-link {
-      font-weight: 500;
-      color: #555;
+      font-weight: 600;
+      color: #64748b;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .nav-tabs .nav-link:hover {
+      color: var(--primary-color);
+      border-color: #cbd5e1;
     }
     .nav-tabs .nav-link.active {
       color: var(--accent-color);
       border-bottom: 3px solid var(--accent-color);
-      font-weight: 700;
+      background-color: transparent;
     }
     .card-kpi {
       border: none;
@@ -70,14 +78,14 @@
       color: #166534;
     }
     .quick-link-card {
-      border-radius: 12px;
+      border-radius: 14px;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
       height: 100%;
     }
     .quick-link-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12) !important;
     }
     .chart-container-box {
       position: relative;
@@ -98,11 +106,9 @@
           <small class="text-white-50">Monitoring Terpadu Lapangan & Pengolahan BPS</small>
         </div>
       </div>
-      <div class="d-flex align-items-center gap-2">
-        <span class="badge bg-light text-dark px-3 py-2 fw-semibold rounded-pill">
-          <i class="bi bi-check-circle-fill text-success me-1"></i> Data Aktif & Terhubung
-        </span>
-      </div>
+      <span class="badge bg-light text-dark px-3 py-2 fw-semibold rounded-pill">
+        <i class="bi bi-calendar-event me-1 text-primary"></i> Triwulan IV 2026
+      </span>
     </div>
   </nav>
 
@@ -177,11 +183,11 @@
       </div>
     </div>
 
-    <!-- Navigation Tabs -->
+    <!-- Navigation Tabs (6 Menu Mandiri) -->
     <ul class="nav nav-tabs mb-3 bg-white p-2 rounded shadow-sm" id="mainTab" role="tablist">
       <li class="nav-item">
         <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-alokasi" type="button">
-          <i class="bi bi-geo-alt"></i> Alokasi Sampel (22 NKS)
+          <i class="bi bi-geo-alt"></i> Alokasi
         </button>
       </li>
       <li class="nav-item">
@@ -201,7 +207,12 @@
       </li>
       <li class="nav-item">
         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-dokumentasi" type="button">
-          <i class="bi bi-camera"></i> Dokumentasi & Link Cepat
+          <i class="bi bi-camera"></i> Dokumentasi
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-link-cepat" type="button">
+          <i class="bi bi-link-45deg text-primary"></i> Link Cepat
         </button>
       </li>
     </ul>
@@ -304,16 +315,16 @@
         </div>
       </div>
 
-      <!-- 5. TAB DOKUMENTASI & TAUTAN SEJAJAR -->
+      <!-- 5. TAB DOKUMENTASI (MANDIRI) -->
       <div class="tab-pane fade" id="tab-dokumentasi">
-        <div class="row g-4">
-          
-          <div class="col-lg-7">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
             <div class="card border-0 shadow-sm p-4">
-              <h5 class="fw-bold text-secondary mb-3">
-                <i class="bi bi-camera-fill text-primary"></i> Input Laporan Dokumentasi Lapangan
-              </h5>
-              <p class="text-muted small mb-4">Lengkapi form berikut untuk merekam kunjungan, aparat yang ditemui, dan dokumentasi lapangan.</p>
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-camera-fill text-primary fs-4"></i>
+                <h5 class="fw-bold text-secondary mb-0">Input Laporan Dokumentasi Lapangan</h5>
+              </div>
+              <p class="text-muted small mb-4">Lengkapi form berikut untuk merekam kunjungan, identitas perangkat yang ditemui, dan foto kegiatan.</p>
               
               <form id="formDokumentasi">
                 <div class="row g-3">
@@ -354,12 +365,12 @@
 
                   <div class="col-12">
                     <label class="form-label fw-semibold">Ringkasan Hasil Lapangan</label>
-                    <textarea class="form-control" id="dokRingkasan" rows="3" placeholder="Tuliskan gambaran ringkas pelaksanaan pendataan, penerimaan responden, dll."></textarea>
+                    <textarea class="form-control" id="dokRingkasan" rows="3" placeholder="Tuliskan gambaran ringkas pelaksanaan pendataan..."></textarea>
                   </div>
 
                   <div class="col-12">
                     <label class="form-label fw-semibold">Fenomena Lapangan</label>
-                    <textarea class="form-control" id="dokFenomena" rows="2" placeholder="Catat fenomena sosial/ekonomi penting di wilayah sampel terkait..."></textarea>
+                    <textarea class="form-control" id="dokFenomena" rows="2" placeholder="Catat fenomena sosial/ekonomi penting terkait..."></textarea>
                   </div>
 
                   <div class="col-12 text-end mt-4">
@@ -371,59 +382,68 @@
               </form>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="col-lg-5">
-            <div class="mb-3">
-              <h6 class="fw-bold text-secondary mb-1"><i class="bi bi-link-45deg text-primary"></i> Akses Tautan Cepat</h6>
-              <small class="text-muted">Pintas langsung ke berkas Google Drive dan spreadsheet anomali.</small>
+      <!-- 6. TAB LINK CEPAT (MANDIRI) -->
+      <div class="tab-pane fade" id="tab-link-cepat">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="text-center mb-4">
+              <h5 class="fw-bold text-dark"><i class="bi bi-link-45deg text-primary"></i> Akses Tautan Penting SERUTI TW IV 2026</h5>
+              <p class="text-muted small">Pintas cepat ke Google Drive penyimpanan berkas dan lembar kerja anomali</p>
             </div>
 
-            <!-- TAUTAN SEJAJAR -->
-            <div class="row g-3 mb-4">
-              <div class="col-6">
-                <a id="cardUploadLK" href="https://drive.google.com/drive/folders/17RBOmYTG6sREG4AIGjao7aJ46Bx05qmx?usp=drive_link" target="_blank" class="card quick-link-card border-0 shadow-sm p-3 bg-white text-decoration-none border-top border-4 border-primary d-flex flex-column justify-content-between">
+            <div class="row g-4 mb-4">
+              <!-- Kartu Upload LK -->
+              <div class="col-md-6">
+                <a href="https://drive.google.com/drive/folders/17RBOmYTG6sREG4AIGjao7aJ46Bx05qmx?usp=drive_link" target="_blank" class="card quick-link-card border-0 shadow-sm p-4 bg-white text-decoration-none border-top border-4 border-primary d-flex flex-column justify-content-between">
                   <div>
-                    <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-3 d-inline-block mb-2">
-                      <i class="bi bi-cloud-arrow-up-fill fs-4"></i>
+                    <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3 d-inline-block mb-3">
+                      <i class="bi bi-cloud-arrow-up-fill fs-2"></i>
                     </div>
-                    <h6 class="fw-bold text-dark mb-1" style="font-size: 0.95rem;">Upload LK</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.78rem;">Folder Google Drive LK.</p>
+                    <h5 class="fw-bold text-dark mb-2">Folder Upload LK</h5>
+                    <p class="text-muted mb-0 small">Buka Google Drive untuk mengunggah Lembar Kerja, scan kuesioner, dan dokumen lapangan.</p>
                   </div>
-                  <div class="mt-3">
-                    <span class="badge bg-primary w-100 py-2">Buka Drive <i class="bi bi-box-arrow-up-right ms-1"></i></span>
+                  <div class="mt-4">
+                    <span class="btn btn-primary w-100 py-2 fw-semibold">
+                      Buka Google Drive <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </span>
                   </div>
                 </a>
               </div>
 
-              <div class="col-6">
-                <a id="cardAnomali" href="https://docs.google.com/spreadsheets/d/1BndYmdADnqKAGxUpE590rcS3M69ozpVkueziNGjzfko/edit?usp=sharing" target="_blank" class="card quick-link-card border-0 shadow-sm p-3 bg-white text-decoration-none border-top border-4 border-warning d-flex flex-column justify-content-between">
+              <!-- Kartu Konfirmasi Anomali -->
+              <div class="col-md-6">
+                <a href="https://docs.google.com/spreadsheets/d/1BndYmdADnqKAGxUpE590rcS3M69ozpVkueziNGjzfko/edit?usp=sharing" target="_blank" class="card quick-link-card border-0 shadow-sm p-4 bg-white text-decoration-none border-top border-4 border-warning d-flex flex-column justify-content-between">
                   <div>
-                    <div class="bg-warning bg-opacity-10 text-warning p-2 rounded-3 d-inline-block mb-2">
-                      <i class="bi bi-exclamation-triangle-fill fs-4"></i>
+                    <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3 d-inline-block mb-3">
+                      <i class="bi bi-exclamation-triangle-fill fs-2"></i>
                     </div>
-                    <h6 class="fw-bold text-dark mb-1" style="font-size: 0.95rem;">Anomali</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.78rem;">Konfirmasi temuan anomali.</p>
+                    <h5 class="fw-bold text-dark mb-2">Konfirmasi Anomali</h5>
+                    <p class="text-muted mb-0 small">Akses Spreadsheet untuk melihat dan melakukan konfirmasi perbaikan temuan data anomali.</p>
                   </div>
-                  <div class="mt-3">
-                    <span class="badge bg-warning text-dark w-100 py-2">Buka Sheet <i class="bi bi-box-arrow-up-right ms-1"></i></span>
+                  <div class="mt-4">
+                    <span class="btn btn-warning text-dark w-100 py-2 fw-semibold">
+                      Buka Spreadsheet Anomali <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </span>
                   </div>
                 </a>
               </div>
             </div>
 
+            <!-- Petunjuk Tambahan -->
             <div class="card border-0 shadow-sm p-3 bg-light">
               <h6 class="fw-bold text-secondary mb-2" style="font-size: 0.9rem;">
-                <i class="bi bi-info-circle-fill text-info me-1"></i> Petunjuk Petugas
+                <i class="bi bi-info-circle-fill text-info me-1"></i> Informasi Petugas
               </h6>
               <ul class="text-muted small ps-3 mb-0" style="line-height: 1.6;">
-                <li>Pilih status <strong>PCL</strong> atau <strong>PML</strong> sesuai penugasan Anda.</li>
-                <li>Foto kegiatan otomatis diarsipkan di Google Drive.</li>
-                <li>Cek menu <strong>Anomali</strong> berkala untuk menjamin validitas isian kuesioner.</li>
+                <li>Pastikan file Lembar Kerja diunggah ke folder yang sesuai dengan identitas NKS dan SLS Anda.</li>
+                <li>Lakukan pengecekan lembar anomali secara berkala agar pengolahan di kabupaten berjalan tepat waktu.</li>
               </ul>
             </div>
 
           </div>
-
         </div>
       </div>
 
@@ -444,9 +464,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // =========================================================================
-    // DATASET ASLI SERUTI TW IV 2026 (LANGSUNG TERTANAM AGAR LANGSUNG TAMPIL)
-    // =========================================================================
+    // DATASET ASLI SERUTI TW IV 2026
     const DEFAULT_DATA = {
       "linkLK": "https://drive.google.com/drive/folders/17RBOmYTG6sREG4AIGjao7aJ46Bx05qmx?usp=drive_link",
       "linkAnomali": "https://docs.google.com/spreadsheets/d/1BndYmdADnqKAGxUpE590rcS3M69ozpVkueziNGjzfko/edit?usp=sharing",
@@ -476,13 +494,9 @@
       ]
     };
 
-    // Opsional: Masukkan URL Apps Script Anda jika ingin sinkronisasi 2 arah ke Google Sheets
-    const API_URL = ""; 
-
     let globalData = null;
     let chartInstance = null;
 
-    // Membangun baris progres awal dari alokasi
     function buildProgresRows(storageKey) {
       const saved = localStorage.getItem(storageKey);
       const parsedSaved = saved ? JSON.parse(saved) : {};
@@ -508,8 +522,6 @@
       const listPML = Array.from(new Set(DEFAULT_DATA.alokasi.map(x => x.pml))).sort();
 
       globalData = {
-        linkLK: DEFAULT_DATA.linkLK,
-        linkAnomali: DEFAULT_DATA.linkAnomali,
         alokasi: DEFAULT_DATA.alokasi,
         officers: { pcl: listPCL, pml: listPML },
         progresPendataan: buildProgresRows('seruti_pendataan'),
@@ -518,21 +530,6 @@
       };
 
       renderApp();
-
-      // Jika ada API_URL, lakukan update latar belakang dari Google Sheet
-      if (API_URL && API_URL.startsWith("http")) {
-        fetch(`${API_URL}?action=getData`)
-          .then(res => res.json())
-          .then(remote => {
-            if (remote && remote.alokasi && remote.alokasi.length > 0) {
-              if (remote.progresPendataan) globalData.progresPendataan = remote.progresPendataan;
-              if (remote.progresPenerimaanKab) globalData.progresPenerimaanKab = remote.progresPenerimaanKab;
-              if (remote.progresIPDS) globalData.progresIPDS = remote.progresIPDS;
-              renderApp();
-            }
-          })
-          .catch(e => console.log("Mode offline/lokal aktif."));
-      }
     }
 
     function hitungProgresList(list) {
@@ -562,7 +559,7 @@
       document.getElementById('subIpds').innerText = `${sumIpds.terisi} / ${sumIpds.target} RUTA`;
       document.getElementById('barIpds').style.width = sumIpds.persen + '%';
 
-      // 2. Datalist Petugas di Form
+      // 2. Datalist Petugas di Form Dokumentasi
       const dl = document.getElementById('officerList');
       dl.innerHTML = '';
       const allOfficers = Array.from(new Set([...globalData.officers.pcl, ...globalData.officers.pml]));
@@ -574,9 +571,9 @@
 
       // 3. Render Tabel-Tabel
       renderAlokasi(globalData.alokasi);
-      renderProgresTable('seruti_pendataan', 'Progres pendataan', globalData.progresPendataan, 'bodyPendataan');
-      renderProgresTable('seruti_kab', 'Progres penerimaan kab', globalData.progresPenerimaanKab, 'bodyKab');
-      renderProgresTable('seruti_ipds', 'Progres penerimaan IPDS', globalData.progresIPDS, 'bodyIpds');
+      renderProgresTable('seruti_pendataan', globalData.progresPendataan, 'bodyPendataan');
+      renderProgresTable('seruti_kab', globalData.progresPenerimaanKab, 'bodyKab');
+      renderProgresTable('seruti_ipds', globalData.progresIPDS, 'bodyIpds');
 
       // 4. Inisialisasi Grafik
       switchChart('pcl');
@@ -599,7 +596,7 @@
       });
     }
 
-    function renderProgresTable(storageKey, sheetName, list, tbodyId) {
+    function renderProgresTable(storageKey, list, tbodyId) {
       const tbody = document.getElementById(tbodyId);
       tbody.innerHTML = '';
 
@@ -615,7 +612,7 @@
                      class="date-input-cell ${hasDateClass}" 
                      value="${val}" 
                      title="RUTA ${i + 1}"
-                     onchange="saveTanggal('${storageKey}', '${sheetName}', ${rowIdx}, '${row.nks}', ${i}, this)">
+                     onchange="saveTanggal('${storageKey}', ${rowIdx}, '${row.nks}', ${i}, this)">
             </td>
           `;
         }
@@ -631,7 +628,7 @@
       });
     }
 
-    function saveTanggal(storageKey, sheetName, rowIdx, nks, rutaIndex, inputEl) {
+    function saveTanggal(storageKey, rowIdx, nks, rutaIndex, inputEl) {
       const val = inputEl.value;
       if (val) inputEl.classList.add('has-date');
       else inputEl.classList.remove('has-date');
@@ -648,26 +645,8 @@
       if (storageKey === 'seruti_kab') globalData.progresPenerimaanKab[rowIdx].rutas[rutaIndex] = val;
       if (storageKey === 'seruti_ipds') globalData.progresIPDS[rowIdx].rutas[rutaIndex] = val;
 
-      // Update KPI & Grafik
       renderApp();
-      showToast("Tanggal RUTA " + (rutaIndex + 1) + " tersimpan!");
-
-      // Sinkronkan ke Google Sheet bila API_URL ada
-      if (API_URL && API_URL.startsWith("http")) {
-        const payload = {
-          action: 'updateTanggal',
-          sheetName: sheetName,
-          rowIndex: rowIdx + 3,
-          rutaIndex: rutaIndex,
-          tanggalVal: val
-        };
-        fetch(API_URL, {
-          method: 'POST',
-          mode: 'no-cors', // Mencegah blokir CORS
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        }).catch(() => {});
-      }
+      showToast("Tanggal RUTA " + (rutaIndex + 1) + " berhasil dicatat!");
     }
 
     function getAggregate(officerKey) {
@@ -763,7 +742,6 @@
     setupSearch('searchKab', 'bodyKab');
     setupSearch('searchIpds', 'bodyIpds');
 
-    // Mulai inisialisasi aplikasi saat dimuat
     window.addEventListener('DOMContentLoaded', initAllData);
   </script>
 </body>

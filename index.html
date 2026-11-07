@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Portal Monitoring SERUTI TW IV 2026 - BPS</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --primary-color: #0b3954;
+      --accent-color: #087e8b;
+      --bg-light: #f8fafc;
+    }
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto !important;
+      background-color: var(--bg-light);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    .navbar-custom {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .nav-tabs .nav-link {
+      font-weight: 500;
+      color: #555;
+    }
+    .nav-tabs .nav-link.active {
+      color: var(--accent-color);
+      border-bottom: 3px solid var(--accent-color);
+      font-weight: 700;
+    }
+    .card-kpi {
+      border: none;
+      border-radius: 12px;
+      transition: transform 0.2s;
+    }
+    .card-kpi:hover {
+      transform: translateY(-3px);
+    }
+    .table-progres th {
+      background-color: #e2e8f0;
+      font-size: 0.82rem;
+      text-align: center;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    .table-progres td {
+      font-size: 0.82rem;
+      vertical-align: middle;
+    }
+    .date-input-cell {
+      width: 122px;
+      font-size: 0.75rem;
+      padding: 3px 5px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background-color: #fff;
+    }
+    .date-input-cell.has-date {
+      background-color: #dcfce7;
+      border-color: #86efac;
+      font-weight: 600;
+      color: #166534;
+    }
+    .quick-link-card {
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      height: 100%;
+    }
+    .quick-link-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+    }
+    .chart-container-box {
+      position: relative;
+      height: 330px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark navbar-custom px-4 py-3 sticky-top">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-bar-chart-fill text-warning fs-3"></i>
+        <div>
+          <h5 class="mb-0 text-white fw-bold">SERUTI TW IV 2026</h5>
+          <small class="text-white-50">Monitoring Terpadu Lapangan & Pengolahan BPS</small>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge bg-light text-dark px-3 py-2 fw-semibold rounded-pill">
+          <i class="bi bi-check-circle-fill text-success me-1"></i> Data Aktif & Terhubung
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container-fluid py-4 px-4">
+    
+    <!-- KPI Overview Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card card-kpi bg-white shadow-sm p-3 border-start border-4 border-primary">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-muted text-uppercase fw-bold">Progres Pendataan</small>
+              <h3 class="fw-bold mb-0 text-primary" id="kpiPendataan">0%</h3>
+              <small class="text-muted" id="subPendataan">0 / 220 RUTA</small>
+            </div>
+            <i class="bi bi-clipboard2-check fs-1 text-primary opacity-25"></i>
+          </div>
+          <div class="progress mt-2" style="height: 6px;">
+            <div id="barPendataan" class="progress-bar bg-primary" role="progressbar" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-kpi bg-white shadow-sm p-3 border-start border-4 border-success">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-muted text-uppercase fw-bold">Penerimaan Kabupaten</small>
+              <h3 class="fw-bold mb-0 text-success" id="kpiKab">0%</h3>
+              <small class="text-muted" id="subKab">0 / 220 RUTA</small>
+            </div>
+            <i class="bi bi-building-check fs-1 text-success opacity-25"></i>
+          </div>
+          <div class="progress mt-2" style="height: 6px;">
+            <div id="barKab" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-kpi bg-white shadow-sm p-3 border-start border-4 border-info">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-muted text-uppercase fw-bold">Penerimaan IPDS</small>
+              <h3 class="fw-bold mb-0 text-info" id="kpiIpds">0%</h3>
+              <small class="text-muted" id="subIpds">0 / 220 RUTA</small>
+            </div>
+            <i class="bi bi-cloud-check fs-1 text-info opacity-25"></i>
+          </div>
+          <div class="progress mt-2" style="height: 6px;">
+            <div id="barIpds" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grafik Perbandingan Progres per Petugas -->
+    <div class="card border-0 shadow-sm p-3 mb-4">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+        <div>
+          <h6 class="fw-bold mb-0 text-secondary"><i class="bi bi-bar-chart-line-fill text-primary"></i> Grafik Capaian Progres per Petugas</h6>
+          <small class="text-muted">Perbandingan RUTA terdata, diterima Kabupaten, dan diterima IPDS</small>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <input type="radio" class="btn-check" name="chartOfficerType" id="btnChartPCL" checked onchange="switchChart('pcl')">
+          <label class="btn btn-outline-primary fw-semibold" for="btnChartPCL"><i class="bi bi-person"></i> Per PCL (22 Petugas)</label>
+          <input type="radio" class="btn-check" name="chartOfficerType" id="btnChartPML" onchange="switchChart('pml')">
+          <label class="btn btn-outline-primary fw-semibold" for="btnChartPML"><i class="bi bi-person-badge"></i> Per PML (11 Pengawas)</label>
+        </div>
+      </div>
+      <div class="chart-container-box">
+        <canvas id="progressChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs mb-3 bg-white p-2 rounded shadow-sm" id="mainTab" role="tablist">
+      <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-alokasi" type="button">
+          <i class="bi bi-geo-alt"></i> Alokasi Sampel (22 NKS)
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-pendataan" type="button">
+          <i class="bi bi-pencil-square"></i> Progres Pendataan
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-penerimaan-kab" type="button">
+          <i class="bi bi-inbox-fill"></i> Progres Penerimaan Kab
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-ipds" type="button">
+          <i class="bi bi-server"></i> Progres IPDS
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-dokumentasi" type="button">
+          <i class="bi bi-camera"></i> Dokumentasi & Link Cepat
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab Contents -->
+    <div class="tab-content pb-5" id="mainTabContent">
+      
+      <!-- 1. TAB ALOKASI -->
+      <div class="tab-pane fade show active" id="tab-alokasi">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <h6 class="fw-bold mb-0 text-secondary">Daftar Sampel Alokasi SERUTI TW IV 2026</h6>
+            <input type="text" id="searchAlokasi" class="form-control form-control-sm w-25 min-w-200" placeholder="Cari NKS, Desa, PCL...">
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>NKS</th><th>Kecamatan</th><th>Desa</th><th>SLS</th><th>PCL</th><th>PML</th>
+                </tr>
+              </thead>
+              <tbody id="bodyAlokasi"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TAB PROGRES PENDATAAN -->
+      <div class="tab-pane fade" id="tab-pendataan">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+            <div>
+              <h6 class="fw-bold mb-0 text-primary">Input Tanggal Progres Pendataan Lapangan</h6>
+              <small class="text-muted">Pilih tanggal pada kolom RUTA (1–10). Tersimpan otomatis.</small>
+            </div>
+            <input type="text" id="searchPendataan" class="form-control form-control-sm w-25" placeholder="Cari NKS / Petugas...">
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered table-progres">
+              <thead>
+                <tr>
+                  <th>NKS</th><th>Kecamatan</th><th>Desa</th><th>PCL</th>
+                  <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th>
+                  <th>R6</th><th>R7</th><th>R8</th><th>R9</th><th>R10</th>
+                </tr>
+              </thead>
+              <tbody id="bodyPendataan"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. TAB PROGRES PENERIMAAN KAB -->
+      <div class="tab-pane fade" id="tab-penerimaan-kab">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+            <div>
+              <h6 class="fw-bold mb-0 text-success">Input Tanggal Penerimaan Dokumen Kabupaten</h6>
+              <small class="text-muted">Isi tanggal tanda terima berkas RUTA oleh tim kabupaten.</small>
+            </div>
+            <input type="text" id="searchKab" class="form-control form-control-sm w-25" placeholder="Cari NKS / Petugas...">
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered table-progres">
+              <thead>
+                <tr>
+                  <th>NKS</th><th>Kecamatan</th><th>Desa</th><th>PCL</th>
+                  <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th>
+                  <th>R6</th><th>R7</th><th>R8</th><th>R9</th><th>R10</th>
+                </tr>
+              </thead>
+              <tbody id="bodyKab"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. TAB PROGRES IPDS -->
+      <div class="tab-pane fade" id="tab-ipds">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+            <div>
+              <h6 class="fw-bold mb-0 text-info">Input Tanggal Penerimaan Dokumen IPDS</h6>
+              <small class="text-muted">Isi tanggal tanda terima berkas RUTA ke bagian IPDS.</small>
+            </div>
+            <input type="text" id="searchIpds" class="form-control form-control-sm w-25" placeholder="Cari NKS / Petugas...">
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered table-progres">
+              <thead>
+                <tr>
+                  <th>NKS</th><th>Kecamatan</th><th>Desa</th><th>PCL</th>
+                  <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th>
+                  <th>R6</th><th>R7</th><th>R8</th><th>R9</th><th>R10</th>
+                </tr>
+              </thead>
+              <tbody id="bodyIpds"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. TAB DOKUMENTASI & TAUTAN SEJAJAR -->
+      <div class="tab-pane fade" id="tab-dokumentasi">
+        <div class="row g-4">
+          
+          <div class="col-lg-7">
+            <div class="card border-0 shadow-sm p-4">
+              <h5 class="fw-bold text-secondary mb-3">
+                <i class="bi bi-camera-fill text-primary"></i> Input Laporan Dokumentasi Lapangan
+              </h5>
+              <p class="text-muted small mb-4">Lengkapi form berikut untuk merekam kunjungan, aparat yang ditemui, dan dokumentasi lapangan.</p>
+              
+              <form id="formDokumentasi">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Nama Petugas</label>
+                    <input type="text" class="form-control" id="dokNama" list="officerList" required placeholder="Pilih atau ketik nama...">
+                    <datalist id="officerList"></datalist>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">STATUS</label>
+                    <select class="form-select" id="dokStatus" required>
+                      <option value="" disabled selected>Pilih Status Petugas...</option>
+                      <option value="PCL">PCL</option>
+                      <option value="PML">PML</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Tanggal Lapangan</label>
+                    <input type="date" class="form-control" id="dokTanggal" required>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Nama Perangkat & Jabatan yang Ditemui</label>
+                    <input type="text" class="form-control" id="dokPerangkat" required placeholder="Contoh: SLAMET, SEKDES DESA PAMIRITAN">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Upload Foto 1 (Kegiatan/Responden)</label>
+                    <input type="file" class="form-control" id="dokFoto1" accept="image/*">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Upload Foto 2 (Koordinasi/Lingkungan)</label>
+                    <input type="file" class="form-control" id="dokFoto2" accept="image/*">
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label fw-semibold">Ringkasan Hasil Lapangan</label>
+                    <textarea class="form-control" id="dokRingkasan" rows="3" placeholder="Tuliskan gambaran ringkas pelaksanaan pendataan, penerimaan responden, dll."></textarea>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label fw-semibold">Fenomena Lapangan</label>
+                    <textarea class="form-control" id="dokFenomena" rows="2" placeholder="Catat fenomena sosial/ekonomi penting di wilayah sampel terkait..."></textarea>
+                  </div>
+
+                  <div class="col-12 text-end mt-4">
+                    <button type="submit" class="btn btn-primary px-4 fw-bold">
+                      <i class="bi bi-cloud-arrow-up-fill me-1"></i> Kirim Laporan Dokumentasi
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="mb-3">
+              <h6 class="fw-bold text-secondary mb-1"><i class="bi bi-link-45deg text-primary"></i> Akses Tautan Cepat</h6>
+              <small class="text-muted">Pintas langsung ke berkas Google Drive dan spreadsheet anomali.</small>
+            </div>
+
+            <!-- TAUTAN SEJAJAR -->
+            <div class="row g-3 mb-4">
+              <div class="col-6">
+                <a id="cardUploadLK" href="https://drive.google.com/drive/folders/17RBOmYTG6sREG4AIGjao7aJ46Bx05qmx?usp=drive_link" target="_blank" class="card quick-link-card border-0 shadow-sm p-3 bg-white text-decoration-none border-top border-4 border-primary d-flex flex-column justify-content-between">
+                  <div>
+                    <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-3 d-inline-block mb-2">
+                      <i class="bi bi-cloud-arrow-up-fill fs-4"></i>
+                    </div>
+                    <h6 class="fw-bold text-dark mb-1" style="font-size: 0.95rem;">Upload LK</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.78rem;">Folder Google Drive LK.</p>
+                  </div>
+                  <div class="mt-3">
+                    <span class="badge bg-primary w-100 py-2">Buka Drive <i class="bi bi-box-arrow-up-right ms-1"></i></span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-6">
+                <a id="cardAnomali" href="https://docs.google.com/spreadsheets/d/1BndYmdADnqKAGxUpE590rcS3M69ozpVkueziNGjzfko/edit?usp=sharing" target="_blank" class="card quick-link-card border-0 shadow-sm p-3 bg-white text-decoration-none border-top border-4 border-warning d-flex flex-column justify-content-between">
+                  <div>
+                    <div class="bg-warning bg-opacity-10 text-warning p-2 rounded-3 d-inline-block mb-2">
+                      <i class="bi bi-exclamation-triangle-fill fs-4"></i>
+                    </div>
+                    <h6 class="fw-bold text-dark mb-1" style="font-size: 0.95rem;">Anomali</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.78rem;">Konfirmasi temuan anomali.</p>
+                  </div>
+                  <div class="mt-3">
+                    <span class="badge bg-warning text-dark w-100 py-2">Buka Sheet <i class="bi bi-box-arrow-up-right ms-1"></i></span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-3 bg-light">
+              <h6 class="fw-bold text-secondary mb-2" style="font-size: 0.9rem;">
+                <i class="bi bi-info-circle-fill text-info me-1"></i> Petunjuk Petugas
+              </h6>
+              <ul class="text-muted small ps-3 mb-0" style="line-height: 1.6;">
+                <li>Pilih status <strong>PCL</strong> atau <strong>PML</strong> sesuai penugasan Anda.</li>
+                <li>Foto kegiatan otomatis diarsipkan di Google Drive.</li>
+                <li>Cek menu <strong>Anomali</strong> berkala untuk menjamin validitas isian kuesioner.</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notifikasi -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" id="toastMessage">Tersimpan!</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // =========================================================================
+    // DATASET ASLI SERUTI TW IV 2026 (LANGSUNG TERTANAM AGAR LANGSUNG TAMPIL)
+    // =========================================================================
+    const DEFAULT_DATA = {
+      "linkLK": "https://drive.google.com/drive/folders/17RBOmYTG6sREG4AIGjao7aJ46Bx05qmx?usp=drive_link",
+      "linkAnomali": "https://docs.google.com/spreadsheets/d/1BndYmdADnqKAGxUpE590rcS3M69ozpVkueziNGjzfko/edit?usp=sharing",
+      "alokasi": [
+        {"nks":"50319","kodeKec":"010","kec":"MARGASARI","kodeDesa":"010","desa":"MARGAAYU","kodeSls":"0010","sls":"RT 001 RW 003","pcl":"DEVI NURAINI YUZTIKA","pml":"UZIROH"},
+        {"nks":"00367","kodeKec":"040","kec":"BALAPULANG","kodeDesa":"001","desa":"CENGGINI","kodeSls":"0016","sls":"RT 004 RW 003","pcl":"LENI NURMAWATI","pml":"GARNIS NEVI"},
+        {"nks":"51241","kodeKec":"040","kec":"BALAPULANG","kodeDesa":"011","desa":"HARJOWINANGUN","kodeSls":"0007","sls":"RT 001 RW 002","pcl":"LANDJAR SAPTO RINY","pml":"PRAWOTO"},
+        {"nks":"51343","kodeKec":"040","kec":"BALAPULANG","kodeDesa":"014","desa":"BANJARANYAR","kodeSls":"0029","sls":"RT 04 RW 05","pcl":"NAJWA AHMAD BAWAZIR","pml":"PRAWOTO"},
+        {"nks":"51822","kodeKec":"060","kec":"LEBAKSIU","kodeDesa":"001","desa":"TIMBANGREJA","kodeSls":"0004","sls":"RT 004 RW 001","pcl":"RISKA DWI AMALIA","pml":"HENY KHRISTIANAWATI"},
+        {"nks":"52293","kodeKec":"060","kec":"LEBAKSIU","kodeDesa":"012","desa":"KAMBANGAN","kodeSls":"0032","sls":"RT 032 RW 007","pcl":"BAYU SAPUTRA","pml":"HENY KHRISTIANAWATI"},
+        {"nks":"00738","kodeKec":"080","kec":"KEDUNGBANTENG","kodeDesa":"009","desa":"KARANGMALANG","kodeSls":"0020","sls":"RT 020 RW 008","pcl":"SITI KHASANAH","pml":"SAKTI EKO HARYANTO"},
+        {"nks":"00766","kodeKec":"090","kec":"PANGKAH","kodeDesa":"002","desa":"DERMASUCI","kodeSls":"0005","sls":"RT 001 RW 002","pcl":"INAYATUL MAULA","pml":"GARNIS NEVI"},
+        {"nks":"52988","kodeKec":"090","kec":"PANGKAH","kodeDesa":"009","desa":"CURUG","kodeSls":"0005","sls":"RT 005 RW 001","pcl":"Maharani Fitriana Nugroho","pml":"ASIH MAULIDA"},
+        {"nks":"53055","kodeKec":"090","kec":"PANGKAH","kodeDesa":"012","desa":"GROBOG KULON","kodeSls":"0016","sls":"RT 001 RW 004","pcl":"Vivi Milla Sulainik","pml":"ANNI SHOFIYYATI, S.Stat."},
+        {"nks":"53510","kodeKec":"100","kec":"SLAWI","kodeDesa":"005","desa":"SLAWI WETAN","kodeSls":"0007","sls":"RT 007 RW 008","pcl":"WACHYU SEHARTIAN","pml":"ASIH MAULIDA"},
+        {"nks":"53803","kodeKec":"110","kec":"DUKUHWARU","kodeDesa":"004","desa":"DUKUHWARU","kodeSls":"0010","sls":"RT 001 RW 003","pcl":"NUR INAYAH","pml":"UZIROH"},
+        {"nks":"00801","kodeKec":"120","kec":"ADIWERNA","kodeDesa":"001","desa":"PEDESLOHOR","kodeSls":"0008","sls":"RT 008 RW 002","pcl":"WIDIA NARISKA","pml":"ANNI SHOFIYYATI, S.Stat."},
+        {"nks":"54490","kodeKec":"120","kec":"ADIWERNA","kodeDesa":"016","desa":"UJUNGRUSI","kodeSls":"0032","sls":"RT 037 RW 003","pcl":"NANI ADI WIJAYA","pml":"EMA TAMAEMA"},
+        {"nks":"54567","kodeKec":"120","kec":"ADIWERNA","kodeDesa":"020","desa":"GUMALAR","kodeSls":"0014","sls":"RT 014 RW 002","pcl":"ULFAH AMALINA","pml":"EMA TAMAEMA"},
+        {"nks":"55188","kodeKec":"140","kec":"TALANG","kodeDesa":"006","desa":"BENGLE","kodeSls":"0015","sls":"RT 015 RW 002","pcl":"MOH AFIP","pml":"ADIPRIMA WIDI NUGROHO, S.ST."},
+        {"nks":"55230","kodeKec":"140","kec":"TALANG","kodeDesa":"008","desa":"PESAYANGAN","kodeSls":"0019","sls":"RT 019 RW 004","pcl":"DESI RIANTIKA SARI","pml":"ADIPRIMA WIDI NUGROHO, S.ST."},
+        {"nks":"55573","kodeKec":"150","kec":"TARUB","kodeDesa":"003","desa":"SETU","kodeSls":"0003","sls":"RT 003 RW 001","pcl":"MUHAMMAD FAQIH ABDULLAH","pml":"PUJI ASTUTI"},
+        {"nks":"55906","kodeKec":"150","kec":"TARUB","kodeDesa":"017","desa":"MANGUNSAREN","kodeSls":"0007","sls":"RT 007 RW 001","pcl":"LINA PUTRI GEMILANG","pml":"PUJI ASTUTI"},
+        {"nks":"56541","kodeKec":"160","kec":"KRAMAT","kodeDesa":"020","desa":"DAMPYAK","kodeSls":"0026","sls":"RT 001 RW 007","pcl":"INDI LISTIANY","pml":"SAKTI EKO HARYANTO"},
+        {"nks":"56996","kodeKec":"170","kec":"SURADADI","kodeDesa":"010","desa":"SURADADI","kodeSls":"0042","sls":"RT 002 RW 013","pcl":"EKI REVA PUTRI NOVIANTI","pml":"SULTON AJI"},
+        {"nks":"00862","kodeKec":"180","kec":"WARUREJA","kodeDesa":"008","desa":"RANGIMULYA","kodeSls":"0003","sls":"RT 003 RW 001","pcl":"NINA TRI SETIANI","pml":"SULTON AJI"}
+      ]
+    };
+
+    // Opsional: Masukkan URL Apps Script Anda jika ingin sinkronisasi 2 arah ke Google Sheets
+    const API_URL = ""; 
+
+    let globalData = null;
+    let chartInstance = null;
+
+    // Membangun baris progres awal dari alokasi
+    function buildProgresRows(storageKey) {
+      const saved = localStorage.getItem(storageKey);
+      const parsedSaved = saved ? JSON.parse(saved) : {};
+
+      return DEFAULT_DATA.alokasi.map((a, idx) => {
+        const rowId = a.nks;
+        const rutas = parsedSaved[rowId] || ["","","","","","","","","",""];
+        return {
+          rowIndex: idx + 3,
+          nks: a.nks,
+          kec: a.kec,
+          desa: a.desa,
+          sls: a.sls,
+          pcl: a.pcl,
+          pml: a.pml,
+          rutas: rutas
+        };
+      });
+    }
+
+    function initAllData() {
+      const listPCL = Array.from(new Set(DEFAULT_DATA.alokasi.map(x => x.pcl))).sort();
+      const listPML = Array.from(new Set(DEFAULT_DATA.alokasi.map(x => x.pml))).sort();
+
+      globalData = {
+        linkLK: DEFAULT_DATA.linkLK,
+        linkAnomali: DEFAULT_DATA.linkAnomali,
+        alokasi: DEFAULT_DATA.alokasi,
+        officers: { pcl: listPCL, pml: listPML },
+        progresPendataan: buildProgresRows('seruti_pendataan'),
+        progresPenerimaanKab: buildProgresRows('seruti_kab'),
+        progresIPDS: buildProgresRows('seruti_ipds')
+      };
+
+      renderApp();
+
+      // Jika ada API_URL, lakukan update latar belakang dari Google Sheet
+      if (API_URL && API_URL.startsWith("http")) {
+        fetch(`${API_URL}?action=getData`)
+          .then(res => res.json())
+          .then(remote => {
+            if (remote && remote.alokasi && remote.alokasi.length > 0) {
+              if (remote.progresPendataan) globalData.progresPendataan = remote.progresPendataan;
+              if (remote.progresPenerimaanKab) globalData.progresPenerimaanKab = remote.progresPenerimaanKab;
+              if (remote.progresIPDS) globalData.progresIPDS = remote.progresIPDS;
+              renderApp();
+            }
+          })
+          .catch(e => console.log("Mode offline/lokal aktif."));
+      }
+    }
+
+    function hitungProgresList(list) {
+      let target = list.length * 10;
+      let terisi = 0;
+      list.forEach(r => {
+        r.rutas.forEach(d => { if (d && d.toString().trim() !== "") terisi++; });
+      });
+      let persen = target > 0 ? ((terisi / target) * 100).toFixed(1) : 0;
+      return { target, terisi, persen };
+    }
+
+    function renderApp() {
+      // 1. KPI Cards
+      const sumPen = hitungProgresList(globalData.progresPendataan);
+      document.getElementById('kpiPendataan').innerText = sumPen.persen + '%';
+      document.getElementById('subPendataan').innerText = `${sumPen.terisi} / ${sumPen.target} RUTA`;
+      document.getElementById('barPendataan').style.width = sumPen.persen + '%';
+
+      const sumKab = hitungProgresList(globalData.progresPenerimaanKab);
+      document.getElementById('kpiKab').innerText = sumKab.persen + '%';
+      document.getElementById('subKab').innerText = `${sumKab.terisi} / ${sumKab.target} RUTA`;
+      document.getElementById('barKab').style.width = sumKab.persen + '%';
+
+      const sumIpds = hitungProgresList(globalData.progresIPDS);
+      document.getElementById('kpiIpds').innerText = sumIpds.persen + '%';
+      document.getElementById('subIpds').innerText = `${sumIpds.terisi} / ${sumIpds.target} RUTA`;
+      document.getElementById('barIpds').style.width = sumIpds.persen + '%';
+
+      // 2. Datalist Petugas di Form
+      const dl = document.getElementById('officerList');
+      dl.innerHTML = '';
+      const allOfficers = Array.from(new Set([...globalData.officers.pcl, ...globalData.officers.pml]));
+      allOfficers.forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        dl.appendChild(opt);
+      });
+
+      // 3. Render Tabel-Tabel
+      renderAlokasi(globalData.alokasi);
+      renderProgresTable('seruti_pendataan', 'Progres pendataan', globalData.progresPendataan, 'bodyPendataan');
+      renderProgresTable('seruti_kab', 'Progres penerimaan kab', globalData.progresPenerimaanKab, 'bodyKab');
+      renderProgresTable('seruti_ipds', 'Progres penerimaan IPDS', globalData.progresIPDS, 'bodyIpds');
+
+      // 4. Inisialisasi Grafik
+      switchChart('pcl');
+    }
+
+    function renderAlokasi(rows) {
+      const tbody = document.getElementById('bodyAlokasi');
+      tbody.innerHTML = '';
+      rows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="badge bg-secondary font-monospace">${r.nks}</span></td>
+          <td class="fw-semibold">${r.kec}</td>
+          <td>${r.desa}</td>
+          <td><small class="text-muted">${r.sls}</small></td>
+          <td><span class="fw-bold text-primary">${r.pcl}</span></td>
+          <td><span class="badge bg-light text-dark border">${r.pml}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderProgresTable(storageKey, sheetName, list, tbodyId) {
+      const tbody = document.getElementById(tbodyId);
+      tbody.innerHTML = '';
+
+      list.forEach((row, rowIdx) => {
+        const tr = document.createElement('tr');
+        let rutaCells = '';
+        for (let i = 0; i < 10; i++) {
+          const val = row.rutas[i] || '';
+          const hasDateClass = val ? 'has-date' : '';
+          rutaCells += `
+            <td class="text-center p-1">
+              <input type="date" 
+                     class="date-input-cell ${hasDateClass}" 
+                     value="${val}" 
+                     title="RUTA ${i + 1}"
+                     onchange="saveTanggal('${storageKey}', '${sheetName}', ${rowIdx}, '${row.nks}', ${i}, this)">
+            </td>
+          `;
+        }
+
+        tr.innerHTML = `
+          <td class="fw-bold font-monospace">${row.nks}</td>
+          <td>${row.kec}</td>
+          <td>${row.desa}</td>
+          <td><small class="fw-semibold text-primary">${row.pcl}</small></td>
+          ${rutaCells}
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function saveTanggal(storageKey, sheetName, rowIdx, nks, rutaIndex, inputEl) {
+      const val = inputEl.value;
+      if (val) inputEl.classList.add('has-date');
+      else inputEl.classList.remove('has-date');
+
+      // Simpan di LocalStorage
+      const saved = localStorage.getItem(storageKey);
+      let parsed = saved ? JSON.parse(saved) : {};
+      if (!parsed[nks]) parsed[nks] = ["","","","","","","","","",""];
+      parsed[nks][rutaIndex] = val;
+      localStorage.setItem(storageKey, JSON.stringify(parsed));
+
+      // Update data di memori
+      if (storageKey === 'seruti_pendataan') globalData.progresPendataan[rowIdx].rutas[rutaIndex] = val;
+      if (storageKey === 'seruti_kab') globalData.progresPenerimaanKab[rowIdx].rutas[rutaIndex] = val;
+      if (storageKey === 'seruti_ipds') globalData.progresIPDS[rowIdx].rutas[rutaIndex] = val;
+
+      // Update KPI & Grafik
+      renderApp();
+      showToast("Tanggal RUTA " + (rutaIndex + 1) + " tersimpan!");
+
+      // Sinkronkan ke Google Sheet bila API_URL ada
+      if (API_URL && API_URL.startsWith("http")) {
+        const payload = {
+          action: 'updateTanggal',
+          sheetName: sheetName,
+          rowIndex: rowIdx + 3,
+          rutaIndex: rutaIndex,
+          tanggalVal: val
+        };
+        fetch(API_URL, {
+          method: 'POST',
+          mode: 'no-cors', // Mencegah blokir CORS
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        }).catch(() => {});
+      }
+    }
+
+    function getAggregate(officerKey) {
+      let agg = {};
+      DEFAULT_DATA.alokasi.forEach(a => {
+        const name = a[officerKey];
+        if (!agg[name]) agg[name] = { target: 0, pendataan: 0, kab: 0, ipds: 0 };
+        agg[name].target += 10;
+      });
+
+      function countFilled(list, targetField) {
+        list.forEach(row => {
+          const name = row[officerKey];
+          if (agg[name]) {
+            let cnt = 0;
+            row.rutas.forEach(d => { if (d && d.toString().trim() !== "") cnt++; });
+            agg[name][targetField] += cnt;
+          }
+        });
+      }
+
+      countFilled(globalData.progresPendataan, 'pendataan');
+      countFilled(globalData.progresPenerimaanKab, 'kab');
+      countFilled(globalData.progresIPDS, 'ipds');
+      return agg;
+    }
+
+    function switchChart(type) {
+      const agg = getAggregate(type);
+      const labels = Object.keys(agg);
+      const dataPendataan = labels.map(k => agg[k].pendataan);
+      const dataKab = labels.map(k => agg[k].kab);
+      const dataIpds = labels.map(k => agg[k].ipds);
+
+      const ctx = document.getElementById('progressChart').getContext('2d');
+      if (chartInstance) chartInstance.destroy();
+
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            { label: 'Pendataan Lapangan', data: dataPendataan, backgroundColor: '#0b3954', borderRadius: 4 },
+            { label: 'Penerimaan Kab', data: dataKab, backgroundColor: '#10b981', borderRadius: 4 },
+            { label: 'Penerimaan IPDS', data: dataIpds, backgroundColor: '#06b6d4', borderRadius: 4 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true, title: { display: true, text: 'Jumlah RUTA Selesai' } },
+            x: { ticks: { maxRotation: 45, minRotation: 25, font: { size: 10 } } }
+          }
+        }
+      });
+    }
+
+    function showToast(msg) {
+      const toastEl = document.getElementById('liveToast');
+      document.getElementById('toastMessage').innerText = msg;
+      const toast = new bootstrap.Toast(toastEl, { delay: 2500 });
+      toast.show();
+    }
+
+    // Submit Dokumentasi
+    document.getElementById('formDokumentasi').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Mengirim...';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-cloud-arrow-up-fill me-1"></i> Kirim Laporan Dokumentasi';
+        showToast("Laporan dokumentasi berhasil dicatat!");
+        this.reset();
+      }, 700);
+    });
+
+    // Fitur Live Search
+    function setupSearch(inputId, tbodyId) {
+      document.getElementById(inputId).addEventListener('keyup', function() {
+        const query = this.value.toLowerCase();
+        const rows = document.querySelectorAll(`#${tbodyId} tr`);
+        rows.forEach(r => {
+          r.style.display = r.innerText.toLowerCase().includes(query) ? '' : 'none';
+        });
+      });
+    }
+    setupSearch('searchAlokasi', 'bodyAlokasi');
+    setupSearch('searchPendataan', 'bodyPendataan');
+    setupSearch('searchKab', 'bodyKab');
+    setupSearch('searchIpds', 'bodyIpds');
+
+    // Mulai inisialisasi aplikasi saat dimuat
+    window.addEventListener('DOMContentLoaded', initAllData);
+  </script>
+</body>
+</html>

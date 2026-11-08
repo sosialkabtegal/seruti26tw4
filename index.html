@@ -61,7 +61,7 @@
 <section class="page" id="page-pendataan"><div class="page-head"><div><div class="eyebrow">Entri hasil lapangan</div><h1>Input Progres Pendataan</h1><p class="page-desc">Pilih NKS, periksa identitas wilayah, lalu isi kolom RUTA 1–10.</p></div></div><div class="alert"><i class="bi bi-info-circle-fill me-2"></i>Nilai/status pada kolom RUTA tidak dipaksakan oleh aplikasi. Isikan sesuai konvensi pencatatan yang digunakan tim lapangan.</div><div class="form-card" id="form-pendataan"></div></section>
 <section class="page" id="page-kab"><div class="page-head"><div><div class="eyebrow">Pemeriksaan berkas kabupaten</div><h1>Progres Penerimaan Kabupaten</h1><p class="page-desc">Pencatatan penerimaan per NKS pada kolom RUTA 1–10.</p></div></div><div class="alert"><i class="bi bi-info-circle-fill me-2"></i>Kolom RUTA mengikuti struktur sheet “Progres penerimaan kab”. Gunakan format nilai/status yang disepakati tim.</div><div class="form-card" id="form-kab"></div></section>
 <section class="page" id="page-ipds"><div class="page-head"><div><div class="eyebrow">Pemeriksaan dan penerimaan data</div><h1>Progres Penerimaan IPDS</h1><p class="page-desc">Pencatatan penerimaan IPDS per NKS pada kolom RUTA 1–10.</p></div></div><div class="alert"><i class="bi bi-info-circle-fill me-2"></i>Kolom RUTA mengikuti struktur sheet “Progres penerimaan IPDS”. Gunakan format nilai/status yang disepakati tim.</div><div class="form-card" id="form-ipds"></div></section>
-<section class="page" id="page-dokumentasi"><div class="page-head"><div><div class="eyebrow">Laporan pengawasan lapangan</div><h1>Dokumentasi & Pembuatan PDF</h1><p class="page-desc">Simpan catatan pengawasan ke sheet Dokumentasi dan hasilkan laporan dari template Google Docs.</p></div></div><div class="alert"><i class="bi bi-file-earmark-pdf-fill me-2"></i>Template: <b>LAPORAN PENGAWASAN SERUTI TW 4</b>. Setelah data tersimpan, PDF dibuka melalui Google Drive. PDF hanya dapat diakses oleh akun Gmail pribadi yang sudah didaftarkan sebagai pengguna berwenang. Pastikan Anda masuk menggunakan akun Gmail yang sama.</div><div class="form-card"><form id="docForm" onsubmit="submitDokumentasi(event)"><div class="section-title" style="margin-top:0">A. Identitas petugas dan wilayah</div><div class="doc-grid"><div><label class="field-label">Nama petugas *</label><input class="field" id="docNama" list="petugasList" required placeholder="Terisi otomatis dari NKS, bisa diedit"><datalist id="petugasList"></datalist></div><div><label class="field-label">Status petugas *</label><select class="field" id="docStatus"><option>PCL</option><option>PML</option></select></div><div><label class="field-label">Tanggal lapangan *</label><input class="field" type="date" id="docTanggal" required></div><div><label class="field-label">Lokasi alokasi / NKS</label><select class="field" id="docNks"><option value="">Pilih lokasi untuk mengisi identitas otomatis (opsional)</option></select></div><div><label class="field-label">Desa / Kelurahan *</label><select class="field" id="docDesa" required><option value="">Pilih desa</option></select></div><div><label class="field-label">Kecamatan *</label><input class="field" id="docKecamatan" required placeholder="Terisi dari alokasi atau ketik"></div><div class="span2"><label class="field-label">Nama PCL *</label><select class="field" id="docNamaPcl" required><option value="">Pilih PCL</option></select></div></div><div class="section-title">B. Hasil pengawasan</div><div class="doc-grid"><div class="span2"><label class="field-label">Nama perangkat desa yang ditemui dan jabatannya *</label><input class="field" id="docPerangkat" required placeholder="Contoh: Slamet, Sekretaris Desa"></div><div class="span2"><label class="field-label">Ringkasan hasil lapangan *</label><textarea class="field" id="docRingkasan" required placeholder="Ringkasan pengawasan dan pemeriksaan lapangan..."></textarea></div><div class="span2"><label class="field-label">Fenomena lapangan *</label><textarea class="field" id="docFenomena" required placeholder="Kendala, temuan, atau fenomena yang dijumpai..."></textarea></div></div><div class="section-title">C. Dokumentasi foto</div><div class="doc-grid"><div class="upload"><label class="field-label">Upload foto 1</label><input class="field" type="file" id="docFoto1" accept="image/*"><img id="preview1" class="preview" alt="Pratinjau foto 1"></div><div class="upload"><label class="field-label">Upload foto 2</label><input class="field" type="file" id="docFoto2" accept="image/*"><img id="preview2" class="preview" alt="Pratinjau foto 2"></div></div><p class="hint">Foto diperkecil otomatis sebelum dikirim. Hindari foto yang memuat data pribadi sensitif di luar kebutuhan laporan.</p><div class="toolbar" style="margin-top:18px"><button class="btn-main" id="docSubmit" type="submit"><i class="bi bi-file-earmark-pdf me-2"></i>Simpan & Unduh PDF</button><button class="btn-ghost" type="reset" onclick="resetPreviews()">Kosongkan Form</button><span class="status" id="docStatusMsg"></span></div></form></div></section>
+<section class="page" id="page-dokumentasi"><div class="page-head"><div><div class="eyebrow">Laporan pengawasan lapangan</div><h1>Dokumentasi & Pembuatan PDF</h1><p class="page-desc">Simpan catatan pengawasan ke sheet Dokumentasi dan hasilkan laporan dari template Google Docs.</p></div></div><div class="alert"><i class="bi bi-file-earmark-pdf-fill me-2"></i>Template: <b>LAPORAN PENGAWASAN SERUTI TW 4</b>. Setelah data tersimpan, PDF dibuat dan otomatis diunduh ke perangkat. Petugas tidak perlu membuka Google Drive atau meminta akses. Arsip PDF tetap tersimpan secara privat oleh pengelola.</div><div class="form-card"><form id="docForm" onsubmit="submitDokumentasi(event)"><div class="section-title" style="margin-top:0">A. Identitas petugas dan wilayah</div><div class="doc-grid"><div><label class="field-label">Nama petugas *</label><input class="field" id="docNama" list="petugasList" required placeholder="Terisi otomatis dari NKS, bisa diedit"><datalist id="petugasList"></datalist></div><div><label class="field-label">Status petugas *</label><select class="field" id="docStatus"><option>PCL</option><option>PML</option></select></div><div><label class="field-label">Tanggal lapangan *</label><input class="field" type="date" id="docTanggal" required></div><div><label class="field-label">Lokasi alokasi / NKS</label><select class="field" id="docNks"><option value="">Pilih lokasi untuk mengisi identitas otomatis (opsional)</option></select></div><div><label class="field-label">Desa / Kelurahan *</label><select class="field" id="docDesa" required><option value="">Pilih desa</option></select></div><div><label class="field-label">Kecamatan *</label><input class="field" id="docKecamatan" required placeholder="Terisi dari alokasi atau ketik"></div><div class="span2"><label class="field-label">Nama PCL *</label><select class="field" id="docNamaPcl" required><option value="">Pilih PCL</option></select></div></div><div class="section-title">B. Hasil pengawasan</div><div class="doc-grid"><div class="span2"><label class="field-label">Nama perangkat desa yang ditemui dan jabatannya *</label><input class="field" id="docPerangkat" required placeholder="Contoh: Slamet, Sekretaris Desa"></div><div class="span2"><label class="field-label">Ringkasan hasil lapangan *</label><textarea class="field" id="docRingkasan" required placeholder="Ringkasan pengawasan dan pemeriksaan lapangan..."></textarea></div><div class="span2"><label class="field-label">Fenomena lapangan *</label><textarea class="field" id="docFenomena" required placeholder="Kendala, temuan, atau fenomena yang dijumpai..."></textarea></div></div><div class="section-title">C. Dokumentasi foto</div><div class="doc-grid"><div class="upload"><label class="field-label">Upload foto 1</label><input class="field" type="file" id="docFoto1" accept="image/*"><img id="preview1" class="preview" alt="Pratinjau foto 1"></div><div class="upload"><label class="field-label">Upload foto 2</label><input class="field" type="file" id="docFoto2" accept="image/*"><img id="preview2" class="preview" alt="Pratinjau foto 2"></div></div><p class="hint">Foto diperkecil otomatis sebelum dikirim. Hindari foto yang memuat data pribadi sensitif di luar kebutuhan laporan.</p><div class="toolbar" style="margin-top:18px"><button class="btn-main" id="docSubmit" type="submit"><i class="bi bi-file-earmark-pdf me-2"></i>Simpan & Unduh PDF</button><button class="btn-ghost" type="reset" onclick="resetPreviews()">Kosongkan Form</button><span class="status" id="docStatusMsg"></span></div></form></div></section>
 
 <section class="page" id="page-tautan"><div class="page-head"><div><div class="eyebrow">Akses cepat</div><h1>Tautan Penting</h1><p class="page-desc">Tautan yang tercatat pada sheet Link.</p></div></div><div class="grid2" id="links"></div></section>
 <div class="footer">SERUTI TW IV 2026 · BPS Kabupaten Tegal · Sumber data: Google Sheets “All about seruti tw IV 2026”</div>
@@ -72,33 +72,91 @@ const P={pendataan:{sheet:"Progres pendataan",key:"progresPendataan",title:"Simp
 function toast(t){let e=document.createElement("div");e.className="toastmsg";e.textContent=t;$("toastbox").append(e);setTimeout(()=>e.remove(),4200)}function safe(u){try{let x=new URL(u);return ["https:","http:"].includes(x.protocol)?x.href:"#"}catch(e){return "#"}}
 function showPage(n){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$("page-"+n)?.classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===n));let b=document.querySelector(`.nav button[data-page="${n}"]`);$("currentTitle").textContent=b?b.textContent.trim():"Dashboard & Progres";$ ("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"})}document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));$("menuToggle").onclick=()=>$("sidebar").classList.toggle("open");$("refresh").onclick=loadDashboard;
 function jsonpRequest(params, timeoutMs=25000){return new Promise((resolve,reject)=>{const callback="serutiJsonp_"+Date.now()+"_"+Math.floor(Math.random()*1000000),script=document.createElement("script");let finished=false;const cleanup=()=>{if(finished)return;finished=true;clearTimeout(timer);script.remove();try{delete window[callback]}catch(_){window[callback]=undefined}};const timer=setTimeout(()=>{cleanup();reject(new Error("Waktu koneksi ke Apps Script habis."))},timeoutMs);window[callback]=data=>{cleanup();resolve(data)};script.onerror=()=>{cleanup();reject(new Error("Tidak dapat membaca respons Apps Script."))};const query=new URLSearchParams({...params,callback:callback,_:String(Date.now())});script.src=CFG.api+"?"+query.toString();script.async=true;document.head.appendChild(script)})}async function getDash(){return jsonpRequest({action:"getDashboard"})}
+function submitDocumentationForm(payload){
+  return new Promise((resolve,reject)=>{
+    try{
+      const frameName="serutiDocPost_"+Date.now()+"_"+Math.floor(Math.random()*1000000);
+      const frame=document.createElement("iframe");
+      frame.name=frameName;frame.title="Pengiriman dokumentasi";frame.style.display="none";
+      const form=document.createElement("form");
+      form.method="POST";form.action=CFG.api;form.target=frameName;
+      form.enctype="application/x-www-form-urlencoded";form.acceptCharset="UTF-8";
+      form.style.display="none";
+      const add=(name,value)=>{const input=document.createElement("input");input.type="hidden";input.name=name;input.value=value;form.appendChild(input)};
+      add("action","submitDokumentasi");
+      add("payload",JSON.stringify(payload));
+      document.body.appendChild(frame);document.body.appendChild(form);
+      form.submit();form.remove();
+      setTimeout(()=>{try{frame.remove()}catch(_){}},240000);
+      resolve(true);
+    }catch(err){reject(err)}
+  });
+}
+async function verifyPdfApi(){
+  const r=await jsonpRequest({action:"ping"},20000);
+  if(!r||r.success!==true||r.apiVersion!=="SERUTI_DIRECT_PDF_V3"){
+    throw new Error("Backend Apps Script belum diperbarui. Pasang Code.gs terbaru dan Deploy sebagai New version.");
+  }
+  return true;
+}
+
 function makeDownloadToken(){const bytes=new Uint8Array(24);crypto.getRandomValues(bytes);return Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("")}
 function waitMs(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
 function decodeBase64Bytes(value){const raw=atob(String(value||""));const out=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)out[i]=raw.charCodeAt(i);return out}
 async function fetchPdfByTicket(token,fallbackName,onProgress){
   const parts=[];let offset=0,totalBytes=0,fileName=fallbackName||"Laporan_SERUTI.pdf",done=false;
-  const deadline=Date.now()+180000;
+  const deadline=Date.now()+240000;
   while(Date.now()<deadline){
     const r=await jsonpRequest({action:"downloadPdfChunk",token:token,offset:String(offset)},30000);
-    if(r&&r.success===false)throw new Error(r.message||"PDF tidak dapat disiapkan.");
-    if(!r||!r.ready){if(onProgress)onProgress("Menunggu PDF selesai dibuat...");await waitMs(900);continue}
+    if(!r)throw new Error("Server tidak mengirim respons unduhan PDF.");
+    if(r.success===false)throw new Error(r.message||"PDF tidak dapat disiapkan.");
+    if(!r.ready){
+      if(r.pending){
+        if(onProgress)onProgress(r.message||"Menunggu PDF selesai dibuat...");
+        await waitMs(1000);continue;
+      }
+      throw new Error(r.message||"Endpoint unduhan PDF belum aktif. Deploy Code.gs versi terbaru.");
+    }
     const chunk=decodeBase64Bytes(r.chunkBase64||"");
-    if(!chunk.length&&!r.done)throw new Error("Data PDF kosong atau terputus.");
-    parts.push(chunk);offset=Number(r.nextOffset||offset+chunk.length);totalBytes=Number(r.totalBytes||totalBytes);fileName=r.fileName||fileName;done=!!r.done;
+    if(!chunk.length&&!r.done)throw new Error("Potongan data PDF kosong. Silakan ulangi.");
+    parts.push(chunk);
+    offset=Number(r.nextOffset||offset+chunk.length);
+    totalBytes=Number(r.totalBytes||totalBytes);
+    fileName=r.fileName||fileName;
+    done=!!r.done;
     if(onProgress&&totalBytes)onProgress("Mengunduh PDF ke perangkat... "+Math.min(100,Math.round(offset/totalBytes*100))+"%");
     if(done)break;
   }
-  if(!done)throw new Error("Waktu menunggu PDF habis. Silakan coba simpan dokumentasi sekali lagi.");
+  if(!done)throw new Error("Waktu menunggu PDF habis. Periksa deployment Apps Script, lalu coba kembali.");
   const blob=new Blob(parts,{type:"application/pdf"});
   if(totalBytes&&blob.size!==totalBytes)throw new Error("Ukuran PDF tidak lengkap. Silakan ulangi unduhan.");
+  try{await jsonpRequest({action:"completePdfDownload",token:token},15000)}catch(_){}
   return {blob:blob,fileName:fileName};
 }
-function triggerPdfDownload(blob,fileName){
-  const url=URL.createObjectURL(blob),a=document.createElement("a");
-  a.href=url;a.download=fileName||"Laporan_SERUTI.pdf";a.style.display="none";
-  document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),60000);
+
+function triggerPdfDownload(blob,fileName,msg){
+  const url=URL.createObjectURL(blob);
+  const auto=document.createElement("a");
+  auto.href=url;auto.download=fileName||"Laporan_SERUTI.pdf";
+  auto.style.display="none";document.body.appendChild(auto);
+  auto.click();auto.remove();
+  if(msg){
+    msg.className="status ok";
+    msg.textContent="PDF berhasil dibuat. Jika unduhan tidak muncul otomatis, gunakan tombol berikut: ";
+    const link=document.createElement("a");
+    link.href=url;link.download=fileName||"Laporan_SERUTI.pdf";
+    link.textContent="Unduh PDF Sekarang";
+    link.className="btn-main";
+    link.style.display="inline-block";
+    link.style.margin="6px 0 6px 8px";
+    link.style.padding="8px 12px";
+    link.style.fontSize="13px";
+    msg.appendChild(link);
+  }
+  setTimeout(()=>URL.revokeObjectURL(url),10*60*1000);
+  return true;
 }
+
 async function post(p){try{let r=await fetch(CFG.api,{method:"POST",mode:"cors",redirect:"follow",cache:"no-store",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(p)});if(!r.ok)throw Error("HTTP "+r.status);return await r.json()}catch(err){if(p&&p.action==="saveProgress"){return jsonpRequest({action:"saveProgress",payload:JSON.stringify(p)},30000)}throw err}}
 function rows(raw,isIpds=false){let base=["NKS","KEC","DESA","SLS","PCL","PML","1","2","3","4","5","6","7","8","9","10"];if(isIpds)base.push("OPERATOR");if(!Array.isArray(raw)||!raw.length)return [base];if(Array.isArray(raw[0]))return raw;let h=Object.keys(raw[0]||{});return [h,...raw.map(o=>h.map(k=>o[k]??""))]}function stats(raw,isIpds=false){let r=rows(raw,isIpds),d=r.slice(1).filter(x=>String(x[0]||"").trim()),target=d.length*10,filled=0;d.forEach(x=>{for(let i=6;i<16;i++)if(String(x[i]??"").trim())filled++});return {r,d,target,filled,pct:target?filled/target*100:0}}
 const A=()=>Array.isArray(D.alokasi)?D.alokasi:[],Docs=()=>Array.isArray(D.dokumentasi)?D.dokumentasi:[],byNks=n=>A().find(a=>String(pick(a,"nks","NKS"))===String(n)),pcl=()=>uniq(A().map(a=>pick(a,"pcl","PCL"))),pml=()=>uniq(A().map(a=>pick(a,"pml","PML"))),petugas=()=>uniq([...pcl(),...pml()]),prow=(key,n)=>rows(D[key]).slice(1).find(x=>String(x[0]||"")===String(n));
@@ -128,9 +186,11 @@ async function submitDokumentasi(e){
   e.preventDefault();fillDocPetugas(false);
   const btn=$("docSubmit"),msg=$("docStatusMsg"),downloadToken=makeDownloadToken();
   btn.disabled=true;btn.textContent="Menyimpan dan membuat PDF...";
-  msg.className="status";msg.textContent="Mengunggah foto dan menyusun laporan...";
+  msg.className="status";msg.textContent="Memeriksa koneksi server...";
   try{
+    await verifyPdfApi();
     const f1=$("docFoto1").files[0],f2=$("docFoto2").files[0];
+    msg.textContent="Mengolah foto dan mengirim formulir dokumentasi...";
     const [d1,d2]=await Promise.all([imageData(f1),imageData(f2)]);
     const payload={
       nama:$("docNama").value.trim(),status:$("docStatus").value,
@@ -144,30 +204,26 @@ async function submitDokumentasi(e){
     if(!payload.nama||!payload.desa||!payload.kecamatan||!payload.tanggalLapangan)
       throw new Error("Nama petugas, desa, kecamatan, dan tanggal lapangan wajib terisi.");
 
-    let serverResponse=null,postError=null;
-    try{serverResponse=await post({action:"submitDokumentasi",payload:payload})}
-    catch(err){postError=err}
-    if(serverResponse&&serverResponse.success===false)
-      throw new Error(serverResponse.message||"Gagal menyimpan dokumentasi.");
-
-    msg.textContent=postError
-      ?"Permintaan diterima. Menunggu file PDF dari server..."
-      :"Dokumentasi tersimpan. Menyiapkan unduhan PDF...";
+    await submitDocumentationForm(payload);
+    msg.textContent="Formulir terkirim. Server sedang membuat PDF...";
     const downloaded=await fetchPdfByTicket(downloadToken,
       "Laporan_SERUTI_"+payload.nama.replace(/[^\w-]+/g,"_")+".pdf",
       text=>{msg.textContent=text});
-    pdfDownload(downloaded.blob,downloaded.fileName);
-    msg.className="status ok";
-    msg.textContent="Dokumentasi tersimpan. PDF otomatis diunduh ke perangkat. Anda tidak perlu membuka Google Drive atau meminta akses.";
-    toast("PDF berhasil diunduh ke perangkat.");
-    $("docForm").reset();resetPreviews();$("docTanggal").value=localISODate();$("docNama").dataset.auto="1";
+    triggerPdfDownload(downloaded.blob,downloaded.fileName,msg);
+
+    $("docForm").reset();
+    ["preview1","preview2"].forEach(id=>$(id).style.display="none");
+    $("docTanggal").value=localISODate();
+    $("docNama").dataset.auto="1";
+    toast("PDF selesai dibuat. Unduhan otomatis telah diminta.");
     await loadDashboard();
   }catch(err){
-    msg.className="status err";msg.textContent="Gagal: "+err.message;
-    toast("Gagal membuat atau mengunduh PDF.");
+    msg.className="status err";msg.textContent="Gagal membuat atau mengunduh PDF: "+err.message;
+    toast("Proses PDF gagal. Periksa pesan pada formulir.");
   }finally{
     btn.disabled=false;btn.innerHTML='<i class="bi bi-file-earmark-pdf me-2"></i>Simpan & Unduh PDF';
   }
 }
+
 function localISODate(d=new Date()){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}$("today").textContent=new Date().toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric"});$("docTanggal").value=localISODate();loadDashboard();
 </script></body></html>
